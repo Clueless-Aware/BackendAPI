@@ -1,4 +1,5 @@
 #!/bin/bash
+
 # SuperUser
 if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ] ;
 then

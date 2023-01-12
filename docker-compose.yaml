@@ -4,6 +4,11 @@ services:
         build:
             context: '${APP_PATH}'
             dockerfile: Dockerfile
+        depends_on:
+            mysql:
+                condition: service_started
+            mailhog:
+                condition: service_started
         deploy:
             restart_policy:
                 condition: on-failure
@@ -13,7 +18,6 @@ services:
         ports:
             - '${APP_PORT}:8000'
         environment:
-
             DJANGO_SUPERUSER_USERNAME: '${DJANGO_SUPERUSER_USERNAME}'
             DJANGO_SUPERUSER_PASSWORD: '${DJANGO_SUPERUSER_PASSWORD}'
             DJANGO_SUPERUSER_EMAIL: '${DJANGO_SUPERUSER_EMAIL}'
@@ -28,20 +32,22 @@ services:
             APP_EMAIL_BACKEND: '${APP_EMAIL_BACKEND}'
             MAIL_HOST: '${MAIL_HOST}'
             MAIL_PORT: '${MAIL_PORT}'
-
         volumes:
             - '${APP_PATH}:/backend'
-        depends_on:
-            - mysql
-            - mailhog
         networks:
-            - network 
+            - network
     mysql:
         build:
-          context: ./mysql
-          dockerfile: Dockerfile
+            context: ./mysql
+            dockerfile: Dockerfile
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 10s
+                max_attempts: 3
+                window: 30s
         ports:
-          - '${FORWARD_DB_PORT:-3306}:3306'
+            - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
             MYSQL_HOST: '${DB_HOST}'
@@ -49,9 +55,9 @@ services:
             MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_DATABASE: '${DB_DATABASE}'
         volumes:
-          - 'mysql-data:/var/lib/mysql'
+            - 'mysql-data:/var/lib/mysql'
         healthcheck:
-            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
             retries: 3
             timeout: 5s
         networks:
@@ -59,8 +65,8 @@ services:
     mailhog:
         image: 'mailhog/mailhog:latest'
         ports:
-          - '${FORWARD_MAILHOG_PORT:-1025}:1025'
-          - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
+            - '${FORWARD_MAILHOG_PORT:-1025}:1025'
+            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
         networks:
             - network
 networks:
