@@ -1,0 +1,71 @@
+version: '3'
+services:
+    backend:
+        build:
+            context: '${APP_PATH}'
+            dockerfile: Dockerfile
+        deploy:
+            restart_policy:
+                condition: on-failure
+                delay: 5s
+                max_attempts: 3
+                window: 30s
+        ports:
+            - '${APP_PORT}:8000'
+        environment:
+
+            DJANGO_SUPERUSER_USERNAME: '${DJANGO_SUPERUSER_USERNAME}'
+            DJANGO_SUPERUSER_PASSWORD: '${DJANGO_SUPERUSER_PASSWORD}'
+            DJANGO_SUPERUSER_EMAIL: '${DJANGO_SUPERUSER_EMAIL}'
+            SECRET_KEY: ${SECRET_KEY}
+            APP_DEBUG: '${APP_DEBUG}'
+            APP_ALLOWED_HOSTS: '${APP_ALLOWED_HOSTS}'
+            DB_HOST: '${DB_HOST}'
+            DB_PORT: '${DB_PORT}'
+            DB_DATABASE: '${DB_DATABASE}'
+            DB_USERNAME: '${DB_USERNAME}'
+            DB_PASSWORD: '${DB_PASSWORD}'
+            APP_EMAIL_BACKEND: '${APP_EMAIL_BACKEND}'
+            MAIL_HOST: '${MAIL_HOST}'
+            MAIL_PORT: '${MAIL_PORT}'
+
+        volumes:
+            - '${APP_PATH}:/backend'
+        depends_on:
+            - mysql
+            - mailhog
+        networks:
+            - network 
+    mysql:
+        build:
+          context: ./mysql
+          dockerfile: Dockerfile
+        ports:
+          - '${FORWARD_DB_PORT:-3306}:3306'
+        environment:
+            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            # MYSQL_HOST: '${DB_HOST}'
+            MYSQL_DATABASE: '${DB_DATABASE}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_ALLOW_EMPTY_PASSWORD: 1
+        volumes:
+          - 'mysql-data:/var/lib/mysql'
+        healthcheck:
+            test: ["CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}"]
+            retries: 3
+            timeout: 5s
+        networks:
+            - network
+    mailhog:
+        image: 'mailhog/mailhog:latest'
+        ports:
+          - '${FORWARD_MAILHOG_PORT:-1025}:1025'
+          - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
+        networks:
+            - network
+networks:
+    network:
+        driver: bridge
+volumes:
+    mysql-data:
