@@ -1,6 +1,6 @@
 #!/bin/bash
 
-mysql -u root  --password="$MYSQL_ROOT_PASSWORD"  << EOF
-USE ${MYSQL_DATABASE};
-GRANT ALL PRIVILEGES ON  test${MYSQL_DATABASE}.* TO '${DJANGO_DB_USERNAME}';
+mysql -u root --password="$MYSQL_ROOT_PASSWORD"  << EOF
+USE ${DBDATABASE};
+GRANT ALL PRIVILEGES ON  test${DB_DATABASE}.* TO '${MYSQL_USER}';
 EOF

@@ -30,7 +30,7 @@ services:
             MAIL_PORT: '${MAIL_PORT}'
 
         volumes:
-            - '${APP_PATH}:/artApi'
+            - '${APP_PATH}:/backend'
         depends_on:
             - mysql
             - mailhog
@@ -43,11 +43,11 @@ services:
         ports:
           - '${FORWARD_DB_PORT:-3306}:3306'
         environment:
-            MYSQL_HOST: '${DB_HOST}'
-            # MYSQL_USER: '${DB_USERNAME}'
             MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+            MYSQL_HOST: '${DB_HOST}'
+            MYSQL_USER: '${DB_USERNAME}'
+            MYSQL_PASSWORD: '${DB_PASSWORD}'
             MYSQL_DATABASE: '${DB_DATABASE}'
-            DJANGO_DB_USERNAME: '${DB_PASSWORD}'
         volumes:
           - 'mysql-data:/var/lib/mysql'
         healthcheck:

@@ -28,9 +28,9 @@ environ.Env.read_env(os.path.join(BASE_DIR.parent, '.env'))
 SECRET_KEY = env.str('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env.boolean('APP_DEBUG')
+DEBUG = env('APP_DEBUG')
 
-ALLOWED_HOSTS = env.list('APP_ALLOWED_HOST')
+ALLOWED_HOSTS = env.list('APP_ALLOWED_HOSTS')
 
 
 # Application definition
@@ -91,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DB_DATABASE'),
-        'USER': env('DJANGO_DB_USERNAME'),
-        'PASSWORD': env('DJANGO_DB_PASSWORD'),
+        'USER': env('DB_USERNAME'),
+        'PASSWORD': env('DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
     }
