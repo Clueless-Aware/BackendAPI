@@ -14,14 +14,15 @@ RUN apk add mariadb-connector-c-dev
 RUN apk add mariadb-dev build-base
 RUN apk add libffi-dev
 RUN apk add --no-cache bash
-COPY . ${DockerHome}
+COPY . .
 
 # Python dependencies
-WORKDIR ${DockerHome}
+# WORKDIR ${DockerHome}
 RUN pip install -r requirements.txt --no-cache-dir
 
 # Script
-RUN chmod a+rx ./init.sh
+RUN chmod 0775 ./init.sh
+
 
 ENTRYPOINT [ "./init.sh" ]
 # RUN ./init.sh

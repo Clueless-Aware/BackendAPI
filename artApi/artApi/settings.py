@@ -91,8 +91,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': env('DB_DATABASE'),
-        'USER': env('DB_USERNAME'),
-        'PASSWORD': env('DB_PASSWORD'),
+        'USER': env('DJANGO_DB_USERNAME'),
+        'PASSWORD': env('DJANGO_DB_PASSWORD'),
         'HOST': env('DB_HOST'),
         'PORT': env('DB_PORT'),
     }
