@@ -2,7 +2,8 @@
 
 ## Environment variables/secrets
 
-For this you will need a working nodejs installation. Someone should have sent you the .env.pass file then run
+For this you will need a working nodejs installation. Someone should have sent you the `.env.pass` file then run
+
 ```bash
     npm install -g senv 
     ./env-decrypt.sh 
@@ -46,3 +47,8 @@ Always check with docker-desktop if everything is running correctly
 
 After you have added dependencies and installed them with pipenv remember to regenerate the `requirements.txt` file
 This is needs to be done because docker needs to use a `requirements.txt` file.
+
+```bash
+  cd artApi
+  pip freeze > requirments.txt
+```
