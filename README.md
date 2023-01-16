@@ -1,5 +1,14 @@
 # BackendAPI
 
+## Environment variables/secrets
+
+For this you will need a working nodejs installation. Someone should have sent you the .env.pass file then run
+```bash
+    npm install -g senv 
+    ./env-decrypt.sh 
+```
+If you change anything remember to run `./env-encrypt.sh`
+
 ## Installation for local development:
 
 Dependencies (Assuming you are running a linux distro with apt)
