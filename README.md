@@ -2,11 +2,10 @@
 
 ## Installation for local development:
 
-Dependencies
+Dependencies (Assuming you are running a linux distro with apt)
 
 ```bash
-  sudo apt install python3
-  sudo apt install libmysqlclient-dev
+  sudo apt install python3 libmysqlclient-dev
   pip install pipenv
   pipenv shell
   pipenv install
@@ -32,3 +31,9 @@ Make sure to have docker installed and to be in the root directory
   docker-compose up
 ```
 Always check with docker-desktop if everything is running correctly
+
+
+### Adding dependencies
+
+After you have added dependencies and installed them with pipenv remember to regenerate the `requirements.txt` file
+This is needs to be done because docker needs to use a `requirements.txt` file.
