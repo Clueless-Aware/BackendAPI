@@ -1,5 +1,7 @@
 # BackendAPI
 
+This is the django-rest repo that hosts our backend :)
+
 ## Environment variables/secrets
 
 For this you will need a working nodejs installation. Someone should have sent you the `.env.pass` file then run
