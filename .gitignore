@@ -1,3 +1,9 @@
+# Intellij
+# https://intellij-support.jetbrains.com/hc/en-us/articles/206544839-How-to-manage-projects-under-Version-Control-Systems
+workspace.xml
+usage.statistics.xml
+*.iws
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
@@ -103,6 +109,7 @@ celerybeat.pid
 
 # Environments
 .env
+.env.pass
 .venv
 env/
 venv/
