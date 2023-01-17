@@ -1,5 +1,9 @@
 #!/bin/bash
 
+# Apply database migrations
+echo "Apply database migrations"
+python manage.py migrate
+
 # SuperUser
 if [ -n "$DJANGO_SUPERUSER_USERNAME" ] && [ -n "$DJANGO_SUPERUSER_PASSWORD" ] ;
 then
@@ -10,9 +14,6 @@ fi
 echo "Collect static files"
 python manage.py collectstatic --noinput
 
-# Apply database migrations
-echo "Apply database migrations"
-python manage.py migrate
 
 # Start server
 echo "Starting server"
