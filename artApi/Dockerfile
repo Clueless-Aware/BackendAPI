@@ -20,9 +20,10 @@ COPY . .
 # WORKDIR ${DockerHome}
 RUN pip install -r requirements.txt --no-cache-dir
 
+RUN ls -lah
 # Script
 RUN chmod 0775 ./init.sh
 
 
-ENTRYPOINT [ "./init.sh" ]
+ENTRYPOINT ["./init.sh"]
 # RUN ./init.sh
