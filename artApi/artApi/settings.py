@@ -32,7 +32,6 @@ DEBUG = env('APP_DEBUG')
 
 ALLOWED_HOSTS = env.list('APP_ALLOWED_HOSTS')
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -51,6 +50,8 @@ INSTALLED_APPS = [
     # Social
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    # Apps
+    'models'
 ]
 
 MIDDLEWARE = [
@@ -83,7 +84,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'artApi.wsgi.application'
 
-
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
@@ -97,7 +97,6 @@ DATABASES = {
         'PORT': env('DB_PORT'),
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -117,7 +116,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
@@ -128,7 +126,6 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
-
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
@@ -141,9 +138,9 @@ STATIC_URL = 'static/'
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Email backend
-EMAIL_BACKEND=env('APP_EMAIL_BACKEND')
-EMAIL_HOST=env('MAIL_HOST')
-EMAIL_PORT=env('MAIL_PORT')
+EMAIL_BACKEND = env('APP_EMAIL_BACKEND')
+EMAIL_HOST = env('MAIL_HOST')
+EMAIL_PORT = env('MAIL_PORT')
 
 # Auth
 SITE_ID = 1
