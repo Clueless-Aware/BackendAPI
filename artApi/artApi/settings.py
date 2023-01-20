@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'dj_rest_auth.registration',
     # For exposing ports
     'corsheaders',
+    # Swagger
     'drf_spectacular'
 ]
 
@@ -161,6 +162,7 @@ REST_FRAMEWORK = {
     ]
 }
 
+# Swagger settings
 SPECTACULAR_SETTINGS = {
     "TITLE": "Art api backend",
     "DESCRIPTION": "Our api backend with DRF :)",
