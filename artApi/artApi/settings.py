@@ -51,6 +51,9 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
+    # Apps
+    'account.apps.AccountConfig',
+    'artwork.apps.ArtworkConfig',
     # For exposing ports
     'corsheaders',
     # Swagger
