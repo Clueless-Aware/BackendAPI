@@ -7,7 +7,7 @@ from .serializers import ArtworkSerializer
 
 # Create your views here.
 class ArtworkViewSet(viewsets.ModelViewSet):
-    queryset = Artwork.objects.order_by('-creation_date')
+    queryset = Artwork.objects.order_by('-title')
     serializer_class = ArtworkSerializer
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [
