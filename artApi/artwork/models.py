@@ -1,9 +1,12 @@
+import os
+
 from django.db import models
 
 
 # Create your models here.
 def upload_to(instance, filename):
-    return 'images/{filename}'.format(filename=filename)
+    _, file_extension = os.path.splitext(filename)
+    return 'images/artworks/{filename}'.format(filename=instance.title) + file_extension
 
 
 class Artwork(models.Model):
