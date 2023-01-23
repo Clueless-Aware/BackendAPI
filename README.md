@@ -10,6 +10,7 @@ For this you will need a working nodejs installation. Someone should have sent y
     npm install -g senv 
     ./env-decrypt.sh 
 ```
+
 If you change anything remember to run `./env-encrypt.sh`
 
 ## Installation for local development:
@@ -19,18 +20,20 @@ Dependencies (Assuming you are running a linux distro with apt)
 ```bash
   sudo apt install python3 libmysqlclient-dev
   pip install pipenv
+  cd artApi/
   pipenv shell
   pipenv install
 ```
 
 Next you'll need to start the local mysql container
-```
+
+```bash
   docker-compose up --build mysql
 ```
 
-
 Then go in the main folder and start the server
-```
+
+```bash
   cd artApi
   python manage.py runserver
 ```
@@ -39,11 +42,11 @@ Then go in the main folder and start the server
 
 Make sure to have docker installed and to be in the root directory
 
-```
+```bash
   docker-compose up
 ```
-Always check with docker-desktop if everything is running correctly
 
+Always check with docker-desktop if everything is running correctly
 
 ### Adding dependencies
 
@@ -52,5 +55,11 @@ This is needs to be done because docker needs to use a `requirements.txt` file.
 
 ```bash
   cd artApi
-  pip freeze > requirments.txt
+  pipenv requirements > requirements.txt
 ```
+
+## Django commands
+
+* `python manage.py runserver`
+* `python manage.py makemigrations`
+* `python manage.py migrate`
