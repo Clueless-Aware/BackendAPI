@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from artApi.artwork.models import Artwork
+from .models import Artwork
 
 # Register your models here.
 
