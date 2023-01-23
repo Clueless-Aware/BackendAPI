@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from drf_spectacular.views import SpectacularAPIView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    # Here you can download all the api documentation in yaml format
+    path('api/schema', SpectacularAPIView.as_view(), name='schema')
 ]

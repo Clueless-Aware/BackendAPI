@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Install dependencies at runtime
+pip install -r requirements.txt --no-cache-dir
+
 # Apply database migrations
 echo "Apply database migrations"
 python manage.py migrate

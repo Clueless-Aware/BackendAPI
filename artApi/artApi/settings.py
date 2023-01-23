@@ -47,16 +47,23 @@ INSTALLED_APPS = [
     'dj_rest_auth',
     'allauth',
     'allauth.account',
-    # Social
+    # Social Auth
+    'django.contrib.sites',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
     # Apps
-    'models'
+    'account.apps.AccountConfig',
+    'artwork.apps.ArtworkConfig',
+    # For exposing ports
+    'corsheaders',
+    # Swagger
+    'drf_spectacular'
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -144,3 +151,24 @@ EMAIL_PORT = env('MAIL_PORT')
 
 # Auth
 SITE_ID = 1
+
+# Cors
+CORS_ORIGIN_WHITELIST = [
+    'http://localhost:8000',
+    'http://localhost:3000',
+]
+
+REST_FRAMEWORK = {
+    'DEFAULT_SCHEMA_CLASS': "drf_spectacular.openapi.AutoSchema",
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny',
+    ]
+}
+
+# Swagger settings
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Art api backend",
+    "DESCRIPTION": "Our api backend with DRF :)",
+    "VERSION": "0.0.1"
+    # OTHER SETTINGS
+}

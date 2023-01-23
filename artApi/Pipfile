@@ -10,6 +10,8 @@ dj-rest-auth = "*"
 django-allauth = "*"
 django-environ = "*"
 mysqlclient = "*"
+django-cors-headers = "*"
+drf-spectacular = "*"
 
 [dev-packages]
 
