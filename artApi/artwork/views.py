@@ -11,7 +11,8 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     serializer_class = ArtworkSerializer
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly]
+        # todo : change this to authenticated only
+        permissions.AllowAny]
 
     # todo : Ask Kevin
     # def perform_create(self, serializer):

@@ -25,6 +25,7 @@ urlpatterns = [
     path('api/schema', SpectacularAPIView.as_view(), name='schema'),
     # Models viewset
     path('api/', include('artwork.urls')),
+    path('api/', include('account.urls')),
 ]
 
 # Media storage location
