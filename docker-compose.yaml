@@ -1,6 +1,6 @@
 version: '3'
 services:
-    backend:
+    django:
         build:
             context: '${APP_PATH}'
             dockerfile: Dockerfile
@@ -38,7 +38,7 @@ services:
             - network
     mysql:
         build:
-            context: ./mysql
+            context: /mysql
             dockerfile: Dockerfile
         deploy:
             restart_policy:

@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM python:3.9-alpine AS builder
+FROM python:alpine
 
 EXPOSE 8000
 
