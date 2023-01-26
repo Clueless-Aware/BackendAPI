@@ -38,7 +38,7 @@ services:
             - network
     mysql:
         build:
-            context: /mysql
+            context: ./mysql
             dockerfile: Dockerfile
         deploy:
             restart_policy:

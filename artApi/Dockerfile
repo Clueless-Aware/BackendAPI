@@ -18,12 +18,10 @@ RUN apk add --no-cache bash
 # Python dependencies
 WORKDIR /backend
 COPY . /backend
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pip install -r requirements.txt
 
-RUN ls -lah
 # Script
-RUN chmod 0775 ./init.sh
-
+RUN chmod +x ./init.sh
 
 ENTRYPOINT ["./init.sh"]
 # RUN ./init.sh
