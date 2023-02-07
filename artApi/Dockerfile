@@ -20,8 +20,9 @@ WORKDIR /backend
 COPY . /backend
 RUN pipenv install
 
-#
-RUN pipenv install gunicorn
+# web server
+# https://gunicorn.org/
+# RUN pipenv install gunicorn
 
 # Script
 RUN chmod +x ./init.sh
