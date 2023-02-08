@@ -5,7 +5,9 @@
 
 version: 2
 updates:
+  
+  # Django dependencies
   - package-ecosystem: "pip" # See documentation for possible values
     directory: "/artApi" # Location of package manifests
     schedule:
-      interval: "weekly"
+      interval: "daily"
