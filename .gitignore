@@ -1,7 +1,9 @@
 # User mediaFiles
 images/
 
+# Ide settings
 .idea/
+.vscode/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
