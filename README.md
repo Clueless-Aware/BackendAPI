@@ -50,16 +50,11 @@ Always check with docker-desktop if everything is running correctly
 
 ### Adding dependencies
 
-After you have added dependencies and installed them with pipenv remember to regenerate the `requirements.txt` file
-This is needs to be done because docker needs to use a `requirements.txt` file.
-
-```bash
-  cd artApi
-  pipenv requirements > requirements.txt
-```
+Install depndencies with pipenv. Restart the container and you should have everything running correcctly.
 
 ## Django commands
 
 * `python manage.py runserver`
 * `python manage.py makemigrations`
 * `python manage.py migrate`
+* `python manage.py collectstatic`

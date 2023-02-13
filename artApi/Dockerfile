@@ -1,4 +1,4 @@
-FROM --platform=$BUILDPLATFORM python:3.9-alpine AS builder
+FROM python:alpine
 
 EXPOSE 8000
 
@@ -6,8 +6,8 @@ EXPOSE 8000
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
-
-RUN pip install --upgrade pip
+RUN pip install --upgrade pip && \
+    pip install pipenv
 
 # Database setup
 RUN apk add mariadb-connector-c-dev
@@ -18,12 +18,13 @@ RUN apk add --no-cache bash
 # Python dependencies
 WORKDIR /backend
 COPY . /backend
-RUN pip install -r requirements.txt --no-cache-dir
+RUN pipenv install
 
-RUN ls -lah
+# web server
+# https://gunicorn.org/
+# RUN pipenv install gunicorn
+
 # Script
-RUN chmod 0775 ./init.sh
-
+RUN chmod +x ./init.sh
 
 ENTRYPOINT ["./init.sh"]
-# RUN ./init.sh

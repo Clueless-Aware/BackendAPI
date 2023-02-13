@@ -1,76 +1,84 @@
 version: '3'
 services:
-    backend:
-        build:
-            context: '${APP_PATH}'
-            dockerfile: Dockerfile
-        depends_on:
-            mysql:
-                condition: service_started
-            mailhog:
-                condition: service_started
-        deploy:
-            restart_policy:
-                condition: on-failure
-                delay: 5s
-                max_attempts: 3
-                window: 30s
-        ports:
-            - '${APP_PORT}:8000'
-        environment:
-            DJANGO_SUPERUSER_USERNAME: '${DJANGO_SUPERUSER_USERNAME}'
-            DJANGO_SUPERUSER_PASSWORD: '${DJANGO_SUPERUSER_PASSWORD}'
-            DJANGO_SUPERUSER_EMAIL: '${DJANGO_SUPERUSER_EMAIL}'
-            SECRET_KEY: ${SECRET_KEY}
-            APP_DEBUG: '${APP_DEBUG}'
-            APP_ALLOWED_HOSTS: '${APP_ALLOWED_HOSTS}'
-            DB_HOST: '${DB_HOST}'
-            DB_PORT: '${DB_PORT}'
-            DB_DATABASE: '${DB_DATABASE}'
-            DB_USERNAME: '${DB_USERNAME}'
-            DB_PASSWORD: '${DB_PASSWORD}'
-            APP_EMAIL_BACKEND: '${APP_EMAIL_BACKEND}'
-            MAIL_HOST: '${MAIL_HOST}'
-            MAIL_PORT: '${MAIL_PORT}'
-        volumes:
-            - '${APP_PATH}:/backend'
-        networks:
-            - network
-    mysql:
-        build:
-            context: ./mysql
-            dockerfile: Dockerfile
-        deploy:
-            restart_policy:
-                condition: on-failure
-                delay: 10s
-                max_attempts: 3
-                window: 30s
-        ports:
-            - '${FORWARD_DB_PORT:-3306}:3306'
-        environment:
-            MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_HOST: '${DB_HOST}'
-            MYSQL_USER: '${DB_USERNAME}'
-            MYSQL_PASSWORD: '${DB_PASSWORD}'
-            MYSQL_DATABASE: '${DB_DATABASE}'
-        volumes:
-            - 'mysql-data:/var/lib/mysql'
-        healthcheck:
-            test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
-            retries: 3
-            timeout: 5s
-        networks:
-            - network
-    mailhog:
-        image: 'mailhog/mailhog:latest'
-        ports:
-            - '${FORWARD_MAILHOG_PORT:-1025}:1025'
-            - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
-        networks:
-            - network
+  django:
+    build:
+      context: '${APP_PATH}'
+      dockerfile: Dockerfile
+    depends_on:
+      mysql:
+        condition: service_started
+      mailhog:
+        condition: service_started
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 30s
+    ports:
+      - '${APP_PORT}:8000'
+    environment:
+      DJANGO_SUPERUSER_USERNAME: '${DJANGO_SUPERUSER_USERNAME}'
+      DJANGO_SUPERUSER_PASSWORD: '${DJANGO_SUPERUSER_PASSWORD}'
+      DJANGO_SUPERUSER_EMAIL: '${DJANGO_SUPERUSER_EMAIL}'
+      SECRET_KEY: ${SECRET_KEY}
+      APP_DEBUG: '${APP_DEBUG}'
+      APP_ALLOWED_HOSTS: '${APP_ALLOWED_HOSTS}'
+      DB_HOST: '${DB_HOST}'
+      DB_PORT: '${DB_PORT}'
+      DB_DATABASE: '${DB_DATABASE}'
+      DB_USERNAME: '${DB_USERNAME}'
+      DB_PASSWORD: '${DB_PASSWORD}'
+      APP_EMAIL_BACKEND: '${APP_EMAIL_BACKEND}'
+      MAIL_HOST: '${MAIL_HOST}'
+      MAIL_PORT: '${MAIL_PORT}'
+    volumes:
+      - '${APP_PATH}:/backend'
+    networks:
+      - network
+  mysql:
+    build:
+      context: ./mysql
+      dockerfile: Dockerfile
+    deploy:
+      restart_policy:
+        condition: on-failure
+        delay: 10s
+        max_attempts: 3
+        window: 30s
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_HOST: '${DB_HOST}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_DATABASE: '${DB_DATABASE}'
+    volumes:
+      - 'mysql-data:/var/lib/mysql'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+    networks:
+      - network
+  mailhog:
+    image: 'mailhog/mailhog:latest'
+    ports:
+      - '${FORWARD_MAILHOG_PORT:-1025}:1025'
+      - '${FORWARD_MAILHOG_DASHBOARD_PORT:-8025}:8025'
+    networks:
+      - network
+#    proxy:
+#        build:
+#            context: proxy
+#            dockerfile: Dockerfile
+#        depends_on:
+#            - django
+#        ports:
+#            - "0.0.0.0:80:80"
 networks:
-    network:
-        driver: bridge
+  network:
+    driver: bridge
 volumes:
-    mysql-data:
+  mysql-data:
