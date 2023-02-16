@@ -15,3 +15,13 @@ class Artwork(models.Model):
     description = models.TextField()
     author = models.CharField(max_length=80, blank=False, null=True)
     image_url = models.ImageField(upload_to=upload_to, blank=True, null=True)
+
+
+class Artist(models.Model):
+    name = models.CharField(max_length=50)
+    years = models.CharField(max_length=50)
+    genre = models.CharField(max_length=50)
+    nationality = models.CharField(max_length=50)
+    bio = models.TextField()
+    wikipedia = models.CharField(max_length=64)
+    paintings = models.IntegerField()
