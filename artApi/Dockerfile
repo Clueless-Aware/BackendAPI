@@ -22,7 +22,7 @@ RUN pipenv install
 
 # web server
 # https://gunicorn.org/
-# RUN pipenv install gunicorn
+RUN pipenv install gunicorn
 
 # Script
 RUN chmod +x ./init.sh

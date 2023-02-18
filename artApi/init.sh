@@ -4,6 +4,7 @@
 pipenv install
 
 # Apply database migrations
+
 echo "Apply database migrations"
 pipenv run ./manage.py migrate
 
@@ -20,4 +21,5 @@ pipenv run ./manage.py collectstatic --noinput
 
 # Start server
 echo "Starting server"
-pipenv run ./manage.py runserver 0.0.0.0:8000
+# pipenv run ./manage.py runserver 0.0.0.0:8000
+pipenv run gunicorn artApi.wsgi:application --bind 0.0.0.0:8000
