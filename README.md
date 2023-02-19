@@ -58,3 +58,16 @@ Install depndencies with pipenv. Restart the container and you should have every
 * `python manage.py makemigrations`
 * `python manage.py migrate`
 * `python manage.py collectstatic`
+
+## Running il local network
+- To run this project on local network, you will need to add the following environment variables to your .env file
+- Set private network
+
+`APP_ALLOWED_HOSTS` = host_ip
+
+```bash
+    docker-compose build
+    docker-compose up
+```
+
+- visit host_ip
