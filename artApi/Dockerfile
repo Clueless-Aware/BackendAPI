@@ -2,10 +2,7 @@ FROM python:alpine
 
 EXPOSE 8000
 
-# ENV DockerHome=backend
-ENV PYTHONDONTWRITEBYTECODE 1
-ENV PYTHONUNBUFFERED 1
-
+# Pipenv
 RUN pip install --upgrade pip && \
     pip install pipenv
 
@@ -20,9 +17,9 @@ WORKDIR /backend
 COPY . /backend
 RUN pipenv install
 
-# web server
+# Web server
 # https://gunicorn.org/
-# RUN pipenv install gunicorn
+RUN pipenv install gunicorn
 
 # Script
 RUN chmod +x ./init.sh
