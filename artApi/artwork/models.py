@@ -18,10 +18,9 @@ class Artwork(models.Model):
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=50)
-    years = models.CharField(max_length=50)
-    genre = models.CharField(max_length=50)
+    name = models.CharField(max_length=50, db_column='artist', primary_key=True)
+    years = models.CharField(max_length=50, db_column='born-died')
+    period = models.CharField(max_length=50)
+    school = models.CharField(max_length=50)
+    base = models.CharField(max_length=50)
     nationality = models.CharField(max_length=50)
-    bio = models.TextField()
-    wikipedia = models.CharField(max_length=64)
-    paintings = models.IntegerField()
