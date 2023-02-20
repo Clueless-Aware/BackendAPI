@@ -60,10 +60,10 @@ Install depndencies with pipenv. Restart the container and you should have every
 * `python manage.py collectstatic`
 
 ## Running il local network
-- To run this project on local network, you will need to add the following environment variables to your .env file
+- To run this project on a local network, you will need to add the following environment variables to your .env file.
 - Set private network
 
-`APP_ALLOWED_HOSTS` = host_ip
+`APP_ALLOWED_HOSTS` = Your Local Ip
 
 ```bash
     docker-compose build
