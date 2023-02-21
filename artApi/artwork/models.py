@@ -24,3 +24,4 @@ class Artist(models.Model):
     school = models.CharField(max_length=50)
     base = models.CharField(max_length=50)
     nationality = models.CharField(max_length=50)
+    sourcePage = models.CharField(max_length=64, db_column='url')
