@@ -21,7 +21,7 @@ pipenv run ./manage.py collectstatic --noinput
 
 # Start server
 echo "Starting server"
-#only on dev mode
+# Only on dev mode
 pipenv run ./manage.py runserver 0.0.0.0:8000
-#on release
+# On release
 # pipenv run gunicorn artApi.wsgi:application --bind 0.0.0.0:8000

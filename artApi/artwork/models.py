@@ -20,6 +20,9 @@ class Artist(models.Model):
     nationality = models.CharField(max_length=50)
     sourcePage = models.CharField(max_length=64, db_column='url')
 
+    def __str__(self):
+        return self.name
+
 
 class Artwork(models.Model):
     id = models.IntegerField(primary_key=True, db_column='ID')

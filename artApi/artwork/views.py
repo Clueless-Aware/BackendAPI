@@ -7,25 +7,24 @@ from .serializers import ArtistSerializer, ArtworkSerializer
 
 # Create your views here.
 class ArtworkViewSet(viewsets.ModelViewSet):
-    queryset = Artwork.objects.order_by('title')
+    queryset = Artwork.objects.order_by('id')
     serializer_class = ArtworkSerializer
     parser_classes = (MultiPartParser, FormParser)
     permission_classes = [permissions.IsAdminUser]
 
     def get_permissions(self):
-        if self.request.method in ['GET','OPTIONS']:
+        if self.request.method in ['GET', 'OPTIONS']:
             return [permissions.AllowAny()]
         return super().get_permissions()
 
 
-
 class ArtistViewSet(viewsets.ModelViewSet):
-    queryset = Artist.objects.order_by('-name')
+    queryset = Artist.objects.order_by('name')
     serializer_class = ArtistSerializer
     parser_classes = (MultiPartParser, FormParser)
     permissions_classes = [permissions.IsAdminUser]
 
     def get_permissions(self):
-        if self.request.method in ['GET','OPTIONS']:
+        if self.request.method in ['GET', 'OPTIONS']:
             return [permissions.AllowAny()]
         return super().get_permissions()
