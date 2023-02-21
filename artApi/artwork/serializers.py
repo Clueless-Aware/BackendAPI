@@ -11,12 +11,16 @@ class ArtworkSerializer(serializers.ModelSerializer):
     title = serializers.CharField()
     picture_data = serializers.CharField()
     file_info = serializers.CharField()
-    image_url = serializers.CharField()
+    image_url = serializers.SerializerMethodField()
+
+    def get_image_url(self, artwork):
+        request = self.context.get('request')
+        image_url = artwork.image_url.url
+        return request.build_absolute_uri(image_url)
 
     class Meta:
         model = Artwork
-        fields = ('id', 'artist', 'title',
-                  'picture_data', 'file_info', 'image_url')
+        fields = '__all__'
 
 
 class ArtistSerializer(serializers.ModelSerializer):
@@ -30,5 +34,4 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Artist
-        fields = ('name', 'years', 'period', 'school',
-                  'base', 'nationality', 'sourcePage')
+        fields = '__all__'
