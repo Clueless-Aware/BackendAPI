@@ -1,4 +1,4 @@
-ID,artist,title,picture data,file info,jpg url
+ID,artist_id,title,picture_data,file_info,jpg url
 0,"AACHEN, Hans von",venus and adonis,"1574-88, oil on canvas, 68 x 95 cm, fogg art museum, harvard university, cambridge","1700*1211, true color, 252 kb",images/artworks/0.jpg
 1,"AACHEN, Hans von",procuring scene,"1605-10, oil on wood, 114 x 130 cm, kunsthistorisches museum, vienna","1370*1168, true color, 212 kb",images/artworks/1.jpg
 2,"AACHEN, Hans von",self-portrait with a glass of wine,"c. 1596, oil on canvas, 53 x 44 cm, private collection","896*1074, true color, 57 kb",images/artworks/2.jpg
