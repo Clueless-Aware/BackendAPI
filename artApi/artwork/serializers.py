@@ -6,17 +6,21 @@ __all__ = ['ArtworkSerializer', 'ArtistSerializer']
 
 
 class ArtworkSerializer(serializers.ModelSerializer):
-    image_url = serializers.ImageField(required=False)
-    title = serializers.CharField(required=True)
-    author = serializers.CharField(required=True)
+    id = serializers.IntegerField()
+    artist = serializers.CharField()
+    title = serializers.CharField()
+    picture_data = serializers.CharField()
+    file_info = serializers.CharField()
+    image_url = serializers.CharField()
 
     class Meta:
         model = Artwork
-        fields = ('id', 'title', 'description', 'author', 'image_url')
+        fields = ('id', 'artist', 'title',
+                  'picture_data', 'file_info', 'image_url')
 
 
 class ArtistSerializer(serializers.ModelSerializer):
-    name = serializers.CharField(required=True)
+    name = serializers.CharField()
     years = serializers.CharField()
     period = serializers.CharField()
     school = serializers.CharField()
