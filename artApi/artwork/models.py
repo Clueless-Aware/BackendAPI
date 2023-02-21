@@ -2,6 +2,8 @@ import os
 
 from django.db import models
 
+__all__ = ['Artwork', 'Artist']
+
 
 # Create your models here.
 def upload_to(instance, filename):
