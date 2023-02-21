@@ -7,13 +7,12 @@ from .serializers import ArtworkSerializer
 
 # Create your views here.
 class ArtworkViewSet(viewsets.ModelViewSet):
-    queryset = Artwork.objects.order_by('-title')
+    queryset = Artwork.objects.order_by('title')
     serializer_class = ArtworkSerializer
     parser_classes = (MultiPartParser, FormParser)
-    permission_classes = [
-        # todo : change this to authenticated only
-        permissions.AllowAny]
+    permission_classes = [permissions.IsAdminUser]
 
-    # todo : Ask Kevin
-    # def perform_create(self, serializer):
-    #    serializer.save(creator=self.request.user)
+    def get_permissions(self):
+        if self.request.method in ['GET','OPTIONS']:
+            return [permissions.AllowAny()]
+        return super().get_permissions()
