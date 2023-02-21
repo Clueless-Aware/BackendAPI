@@ -13,7 +13,7 @@ mysqlclient = "*"
 django-cors-headers = "*"
 drf-spectacular = "*"
 pillow = "*"
-pipfile = "*"
+djangorestframework-simplejwt = "*"
 
 [dev-packages]
 

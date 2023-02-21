@@ -167,7 +167,14 @@ REST_FRAMEWORK = {
         "drf_spectacular.openapi.AutoSchema",
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
-    ]
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [     
+                                       #auth
+        'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
+                                       #JWT
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+   ], 
 }
 
 # Swagger settings
