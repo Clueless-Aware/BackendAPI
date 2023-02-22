@@ -57,7 +57,9 @@ INSTALLED_APPS = [
     # For exposing ports
     'corsheaders',
     # Swagger
-    'drf_spectacular'
+    'drf_spectacular',
+    # Filtering
+    'django_filters',
 ]
 
 MIDDLEWARE = [
