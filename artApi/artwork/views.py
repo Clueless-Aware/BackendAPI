@@ -14,7 +14,7 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter,)
-    filterset_fields = ['id', 'title']
+    filterset_fields = ['title', 'artist', 'museum']
     ordering_fields = '__all__'
     ordering = ['id']
     # Permissions
@@ -32,7 +32,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     parser_classes = (MultiPartParser, FormParser)
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter,)
-    filterset_fields = ['name', 'school']
+    filterset_fields = ['name', 'school', 'period', 'nationality', 'base']
     ordering_fields = '__all__'
     ordering = ['name']
     # Permissions
