@@ -28,12 +28,17 @@ class Artwork(models.Model):
     id = models.IntegerField(primary_key=True, db_column='ID')
     artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
     title = models.CharField(max_length=128)
-    picture_data = models.CharField(max_length=128)
-    file_info = models.CharField(max_length=50)
-    # Extra columns
+    # Extra picture data
     date = models.CharField(max_length=50, null=True)
     type = models.CharField(max_length=50, null=True)
     size = models.CharField(max_length=50, null=True)
     museum = models.CharField(max_length=128, null=True)
+    # File information
+    resolution = models.CharField(max_length=24)
+    color = models.CharField(max_length=24)
+    file_dimension = models.CharField(max_length=24)
 
     image_url = models.ImageField(upload_to=upload_to, max_length=50, db_column='jpg url')
+
+    def __str__(self):
+        return self.title

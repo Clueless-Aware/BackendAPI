@@ -9,8 +9,16 @@ class ArtworkSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
     artist = serializers.CharField()
     title = serializers.CharField()
-    picture_data = serializers.CharField()
-    file_info = serializers.CharField()
+    # Image Info
+    resolution = serializers.CharField()
+    color = serializers.CharField()
+    file_dimension = serializers.CharField()
+    # File info
+    date = serializers.CharField()
+    type = serializers.CharField()
+    size = serializers.CharField()
+    museum = serializers.CharField()
+
     image_url = serializers.SerializerMethodField()
 
     def get_image_url(self, artwork):
