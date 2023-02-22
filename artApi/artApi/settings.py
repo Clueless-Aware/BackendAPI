@@ -163,18 +163,20 @@ CORS_ORIGIN_WHITELIST = [
 ]
 
 REST_FRAMEWORK = {
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.LimitOffsetPagination',
+    'PAGE_SIZE': 100,
     'DEFAULT_SCHEMA_CLASS':
         "drf_spectacular.openapi.AutoSchema",
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny',
     ],
-    'DEFAULT_AUTHENTICATION_CLASSES': [     
-                                       #auth
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        # auth
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-                                       #JWT
+        # JWT
         'rest_framework_simplejwt.authentication.JWTAuthentication',
-   ], 
+    ],
 }
 
 # Swagger settings
@@ -184,3 +186,7 @@ SPECTACULAR_SETTINGS = {
     "VERSION": "0.0.1"
     # OTHER SETTINGS
 }
+
+# Media folder
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

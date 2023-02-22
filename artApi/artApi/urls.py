@@ -28,7 +28,7 @@ urlpatterns = [
     # Models viewset
     path('api/', include('artwork.urls')),
     path('api/', include('account.urls')),
-    path('api/auth/registration/',include('dj_rest_auth.registration.urls')),
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/', include('dj_rest_auth.urls')),
     path('api/auth/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/auth/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
