@@ -23,9 +23,8 @@ def scrape(url):
         desc = ''
         # TODO: not found
         paragraphs = driver.find_elements(By.CSS_SELECTOR, 'td p')
-        for paragrph in paragraphs:
-            desc += (paragrph.text + '\n')
-        print(desc)
+        for paragraph in paragraphs:
+            desc += (paragraph.text + '\n')
 
         img_url = driver.find_element(
             By.XPATH, '/html/body/center/table/tbody/tr[2]/td/img').get_attribute("src")
