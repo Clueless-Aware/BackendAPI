@@ -14,18 +14,18 @@ def scrape(url):
 
     # Artist portrait
     image_url = tree.xpath('/html/body/center/table/tr/td/img/@src')
+    complete_url = '-'
     try:
-        image_url[0] = 'https://www.wga.hu' + image_url[0]
+        complete_url = 'https://www.wga.hu' + image_url[0]
     except Exception as e:
         print(f'Missing image url {e}')
-        image_url[0] = '-'
 
     # Artist biography
     bio = tree.xpath(
         '/html/body/center/table/tr/td/p')
     if bio is None:
         print('No biography found...')
-        return ['', image_url[0]]
+        return ['', complete_url]
     complete_bio = ''
 
     for paragraph in bio:
@@ -33,11 +33,15 @@ def scrape(url):
 
     complete_bio = complete_bio.rstrip().lstrip()
 
-    return [complete_bio, image_url[0]]
+    return [complete_bio, complete_url]
 
 
 def generate_urls():
-    return pd.read_csv('../data/bio_catalog.csv')
+    # 211
+    # 727
+    # 843
+    # 937
+    return pd.read_csv('../data/bio_catalog.csv', skiprows=range(1, 1538))
 
 
 def main():
@@ -64,7 +68,7 @@ def main():
     print('closing) --------- Saving new dataframe to a csv file')
     df.drop('URL', axis=1, inplace=True)
     pd.concat([df, descriptions], axis=1).to_csv(
-        'test.csv', header=True, index=False)
+        'test2.csv', header=True, index=False)
 
 
 if __name__ == "__main__":
