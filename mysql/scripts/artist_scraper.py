@@ -4,33 +4,40 @@ from lxml import html
 
 
 def scrape(url):
-
     # Request the page
     page = requests.get(url)
 
-    # Parsing the page
+    # Parsing the elements to a tree
     tree = html.fromstring(page.content)
-    # tree = cleaner.clean_html(page.content)
 
-    # Get element using XPath
+    # Get elements using XPath
+
+    # Artist portrait
     image_url = tree.xpath('/html/body/center/table/tr/td/img/@src')
-    # print(image_url[0])
+    try:
+        image_url[0] = 'https://www.wga.hu' + image_url[0]
+    except Exception as e:
+        print(f'Missing image url {e}')
+        image_url[0] = '-'
 
+    # Artist biography
     bio = tree.xpath(
         '/html/body/center/table/tr/td/p')
-    completeBio = ''
+    if bio is None:
+        print('No biography found...')
+        return ['', image_url[0]]
+    complete_bio = ''
 
     for paragraph in bio:
-        completeBio += paragraph.text_content()
+        complete_bio += paragraph.text_content()
 
-    completeBio = completeBio.rstrip().lstrip()
-    # print(f'Complete bio: {completeBio}')
+    complete_bio = complete_bio.rstrip().lstrip()
 
-    return [completeBio, image_url[0]]
+    return [complete_bio, image_url[0]]
 
 
 def generate_urls():
-    return pd.read_csv('../data/bio_catalog.csv', nrows=100)
+    return pd.read_csv('../data/bio_catalog.csv')
 
 
 def main():
@@ -49,6 +56,10 @@ def main():
     except KeyboardInterrupt:
         print(
             f'Stopping scraping... I was working on element {cont}/{size}')
+    except Exception as e:
+        print(f'Generic exception {e} - {e.__traceback__} - {e.__cause__}')
+    else:
+        print('All went well!')
 
     print('closing) --------- Saving new dataframe to a csv file')
     df.drop('URL', axis=1, inplace=True)
