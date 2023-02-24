@@ -37,11 +37,9 @@ def scrape(url):
 
 
 def generate_urls():
-    # 211
-    # 727
-    # 843
-    # 937
-    return pd.read_csv('../data/bio_catalog.csv', skiprows=range(1, 1538))
+    # for skipping specific rows
+    # skiprows=range(1, 1538)
+    return pd.read_csv('../data/bio_catalog.csv')
 
 
 def main():
@@ -63,7 +61,7 @@ def main():
     except Exception as e:
         print(f'Generic exception {e} - {e.__traceback__} - {e.__cause__}')
     else:
-        print('All went well!')
+        print(f'Successfully download all {size} elements!')
 
     print('closing) --------- Saving new dataframe to a csv file')
     df.drop('URL', axis=1, inplace=True)
