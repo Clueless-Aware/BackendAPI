@@ -1,42 +1,36 @@
 import pandas as pd
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
-from selenium.webdriver.common.by import By
-from webdriver_manager.chrome import ChromeDriverManager
+import requests
+from lxml import html
 
 
 def scrape(url):
-    options = Options()
 
-    options.add_experimental_option('excludeSwitches', ['enable-logging'])
+    # Request the page
+    page = requests.get(url)
 
-    driver = webdriver.Chrome(service=Service(
-        ChromeDriverManager().install()), options=options)
+    # Parsing the page
+    tree = html.fromstring(page.content)
+    # tree = cleaner.clean_html(page.content)
 
-    with driver:
-        driver.get(url)
-        # find element by xpath
-        frame = driver.find_element(By.XPATH, '/html/frameset/frame[2]')
+    # Get element using XPath
+    image_url = tree.xpath('/html/body/center/table/tr/td/img/@src')
+    # print(image_url[0])
 
-        driver.switch_to.frame(frame)
-        desc = ''
-        # TODO: not found
-        paragraphs = driver.find_elements(By.CSS_SELECTOR, 'td p')
-        for paragraph in paragraphs:
-            desc += (paragraph.text + '\n')
+    bio = tree.xpath(
+        '/html/body/center/table/tr/td/p')
+    completeBio = ''
 
-        img_url = driver.find_element(
-            By.XPATH, '/html/body/center/table/tbody/tr[2]/td/img').get_attribute("src")
-        # download file somewhere set a new name/path
+    for paragraph in bio:
+        completeBio += paragraph.text_content()
 
-        # TODO: fill the column[description,img_url]
+    completeBio = completeBio.rstrip().lstrip()
+    # print(f'Complete bio: {completeBio}')
 
-    return [desc, img_url]
+    return [completeBio, image_url[0]]
 
 
 def generate_urls():
-    return pd.read_csv('../data/bio_catalog.csv', nrows=50)
+    return pd.read_csv('../data/bio_catalog.csv', nrows=100)
 
 
 def main():
