@@ -3,7 +3,7 @@ import requests
 
 
 def save(df):
-    df.to_csv('try.csv', header=True, index=False)
+    df.to_csv('../data/bio_catalog.csv', header=True, index=False)
 
 
 def update_url(name):
