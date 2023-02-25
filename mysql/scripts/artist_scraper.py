@@ -37,7 +37,7 @@ def scrape(url):
 
 
 def generate_urls():
-    # for skipping specific rows
+    # For skipping specific rows
     # skiprows=range(1, 1538)
     return pd.read_csv('../data/bio_catalog.csv')
 

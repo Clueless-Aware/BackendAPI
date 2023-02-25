@@ -1,4 +1,5 @@
 import pandas as pd
+import requests
 
 
 def save(df):
@@ -10,7 +11,11 @@ def update_url(name):
     return new_url
 
 
-def download_image():
+def download_image(artist_name, url):
+    print(f'{artist_name} at {url}')
+    portrait_data = requests.get(url).content
+    with open(f'../../artApi/images/artists/{artist_name}.jpg', 'wb') as handler:
+        handler.write(portrait_data)
     return
 
 
@@ -20,9 +25,11 @@ def load_data():
 
 def main():
     df = load_data()
-    print('int) ------ Load data')
+    print('init) ------ Load data')
 
-    cont = 0
+    print(f'------ Starting the download of {df.size} images')
+    df[['ARTIST', 'portrait']].apply(lambda artist: download_image(artist['ARTIST'], artist['portrait']), axis=1)
+
     df['portrait'] = df['ARTIST'].apply(update_url)
     print(df['portrait'])
 

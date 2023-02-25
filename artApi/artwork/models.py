@@ -8,12 +8,12 @@ __all__ = ['Artwork', 'Artist']
 # Create your models here.
 def upload_to(instance, filename):
     _, file_extension = os.path.splitext(filename)
-    return 'images/artwork/{filename}'.format(filename=instance.id) + file_extension
+    return 'images/artworks/{filename}'.format(filename=instance.id) + file_extension
 
 
 def upload_to_artist(instance, filename):
     _, file_extension = os.path.splitext(filename)
-    return 'images/artist/{filename}'.format(filename=instance.name) + file_extension
+    return 'images/artists/{filename}'.format(filename=instance.name) + file_extension
 
 
 class Artist(models.Model):
