@@ -7,7 +7,7 @@ __all__ = ['ArtworkSerializer', 'ArtistSerializer']
 
 class ArtworkSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
-    artist = serializers.CharField()
+    author = serializers.CharField()
     title = serializers.CharField()
     # Image Info
     resolution = serializers.CharField()
@@ -33,12 +33,13 @@ class ArtworkSerializer(serializers.ModelSerializer):
 
 class ArtistSerializer(serializers.ModelSerializer):
     name = serializers.CharField()
-    years = serializers.CharField()
-    period = serializers.CharField()
+    birth_data = serializers.CharField()
+    profession = serializers.CharField()
     school = serializers.CharField()
-    base = serializers.CharField()
-    nationality = serializers.CharField()
-    sourcePage = serializers.CharField()
+
+    # Biography
+    biography = serializers.CharField()
+    portrait = serializers.CharField()
 
     class Meta:
         model = Artist
