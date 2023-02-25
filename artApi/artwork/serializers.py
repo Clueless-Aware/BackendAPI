@@ -39,7 +39,12 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     # Biography
     biography = serializers.CharField()
-    portrait = serializers.CharField()
+    portrait = serializers.SerializerMethodField()
+
+    def get_portrait(self, artist):
+        request = self.context.get('request')
+        portrait_url = artist.portrait.url
+        return request.build_absolute_uri(portrait_url)
 
     class Meta:
         model = Artist
