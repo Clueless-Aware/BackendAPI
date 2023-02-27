@@ -32,20 +32,36 @@ class Artist(models.Model):
 
 
 class Artwork(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='ID')
-    author = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
-    # Extra picture data
-    date = models.CharField(max_length=50, null=True)
-    type = models.CharField(max_length=50, null=True)
-    size = models.CharField(max_length=50, null=True)
-    museum = models.CharField(max_length=128, null=True)
-    # File information
-    resolution = models.CharField(max_length=24)
-    color = models.CharField(max_length=24)
-    file_dimension = models.CharField(max_length=24)
+    # No primary key is specified
 
-    image_url = models.ImageField(upload_to=upload_to, max_length=50, db_column='jpg url')
+    # author = models.ForeignKey(Artist, on_delete=models.CASCADE)
+    # Temporary
+    author = models.CharField(max_length=64)
+    title = models.CharField(max_length=128)
+
+    date = models.CharField(max_length=128)
+
+    # Technique used like Oil on wood, Pen and ink, Cartoon, ecc...
+    # This could also become a choice field
+    technique = models.CharField(max_length=256)
+
+    # Where the art is currently stored
+    # This could be made into another model
+    location = models.CharField(max_length=128)
+
+    # Form of the artwork as in: painting, tapestry, graphics, architecture, ecc...
+    form = models.CharField(max_length=50)
+
+    # Type of artwork: Study, religious, portrait, fresco...
+    # Could become a choice field
+    type = models.CharField(max_length=50)
+
+    # timeframe where the art was finalized, examples: 1501-1550, 1701-1750, 1551-1500, ecc...
+    timeframe = models.CharField(max_length=50)
+
+    description = models.TextField(null=True)
+
+    image_url = models.ImageField(upload_to=upload_to, max_length=254, db_column='jpg url')
 
     def __str__(self):
         return self.title
