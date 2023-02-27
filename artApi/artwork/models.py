@@ -8,7 +8,7 @@ __all__ = ['Artwork', 'Artist']
 # Create your models here.
 def upload_to(instance, filename):
     _, file_extension = os.path.splitext(filename)
-    return 'images/artworks/{filename}'.format(filename=instance.id) + file_extension
+    return 'images/artworks/{filename}'.format(filename=instance.title) + file_extension
 
 
 def upload_to_artist(instance, filename):
@@ -25,7 +25,7 @@ class Artist(models.Model):
 
     # Biography
     biography = models.TextField(db_column='description', null=True)
-    portrait = models.ImageField(upload_to=upload_to, max_length=64)
+    portrait = models.ImageField(upload_to=upload_to_artist, max_length=64)
 
     id = models.IntegerField(primary_key=True)
 

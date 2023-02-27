@@ -6,8 +6,6 @@ __all__ = ['ArtworkSerializer', 'ArtistSerializer']
 
 
 class ArtworkSerializer(serializers.ModelSerializer):
-    id = serializers.IntegerField()
-
     # Author info
     author = serializers.CharField()
     author_id = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artist.objects.all())
