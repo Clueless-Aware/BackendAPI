@@ -44,8 +44,8 @@ def main():
 
     print('4) ----- Saving')
 
-    # calculate_mismatch(artworks, artists)
-    # print('5) Calculate mismatch between artists and artwork')
+    calculate_mismatch(artworks, artists)
+    print('5) Calculate mismatch between artists and artwork')
 
 
 if __name__ == "__main__":
