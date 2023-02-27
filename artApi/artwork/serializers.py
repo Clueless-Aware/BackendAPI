@@ -7,19 +7,24 @@ __all__ = ['ArtworkSerializer', 'ArtistSerializer']
 
 class ArtworkSerializer(serializers.ModelSerializer):
     id = serializers.IntegerField()
+
+    # Author info
     author = serializers.CharField()
+    author_id = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artist.objects.all())
+
     title = serializers.CharField()
     # Image Info
-    resolution = serializers.CharField()
-    color = serializers.CharField()
-    file_dimension = serializers.CharField()
-    # File info
     date = serializers.CharField()
-    type = serializers.CharField()
-    size = serializers.CharField()
-    museum = serializers.CharField()
+    technique = serializers.CharField()
+    location = serializers.CharField()
 
-    image_url = serializers.SerializerMethodField()
+    # File info
+    form = serializers.CharField()
+    type = serializers.CharField()
+    timeframe = serializers.CharField()
+    description = serializers.CharField()
+
+    image_url = serializers.ImageField()
 
     def get_image_url(self, artwork):
         request = self.context.get('request')
@@ -39,7 +44,9 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     # Biography
     biography = serializers.CharField()
-    portrait = serializers.SerializerMethodField()
+    portrait = serializers.ImageField()
+
+    id = serializers.IntegerField()
 
     def get_portrait(self, artist):
         request = self.context.get('request')
