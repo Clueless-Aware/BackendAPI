@@ -17,7 +17,7 @@ def upload_to_artist(instance, filename):
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=50, db_column='artist', primary_key=True)
+    name = models.CharField(max_length=50, db_column='artist', unique=True)
     birth_data = models.CharField(max_length=128, db_column='birth data')
     profession = models.CharField(max_length=50)
     # Italian, French, German, Flemish, ecc...
@@ -27,16 +27,19 @@ class Artist(models.Model):
     biography = models.TextField(db_column='description', null=True)
     portrait = models.ImageField(upload_to=upload_to, max_length=64)
 
+    id = models.IntegerField(primary_key=True)
+
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.id}'
 
 
 class Artwork(models.Model):
     # No primary key is specified
 
-    # author = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    # Temporary
+    # Can't use name as foreign key since some artists are unknown
     author = models.CharField(max_length=64)
+    author_id = models.ForeignKey(to=Artist, on_delete=models.CASCADE)
+
     title = models.CharField(max_length=128)
 
     date = models.CharField(max_length=128)
