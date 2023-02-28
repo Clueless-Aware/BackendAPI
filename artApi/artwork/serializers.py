@@ -16,8 +16,9 @@ class ArtworkSerializer(serializers.ModelSerializer):
     technique = serializers.CharField()
     location = serializers.CharField()
 
-    # File info
+    # Form of the artwork as in: painting, tapestry, graphics, architecture, ecc...
     form = serializers.CharField()
+    # Type of artwork: Study, religious, portrait, fresco...
     type = serializers.CharField()
     timeframe = serializers.CharField()
     description = serializers.CharField()
@@ -44,8 +45,6 @@ class ArtistSerializer(serializers.ModelSerializer):
     biography = serializers.CharField()
     # Artist portrait
     portrait = serializers.ImageField()
-
-    id = serializers.IntegerField()
 
     def get_portrait(self, artist):
         request = self.context.get('request')

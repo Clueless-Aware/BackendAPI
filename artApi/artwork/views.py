@@ -1,6 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions
-from rest_framework.filters import OrderingFilter
+from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.parsers import MultiPartParser, FormParser
 
 from .models import Artist, Artwork
@@ -12,11 +12,15 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
     serializer_class = ArtworkSerializer
     parser_classes = (MultiPartParser, FormParser)
+
     # Filtering
-    filter_backends = (DjangoFilterBackend, OrderingFilter,)
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+
+    search_fields = ['title', 'author', 'technique', 'location', 'timeframe', 'form', 'type']
     filterset_fields = ['title', 'author', 'technique', 'location', 'timeframe', 'form', 'type']
     ordering_fields = '__all__'
     ordering = ['id']
+
     # Permissions
     permission_classes = [permissions.IsAdminUser]
 
@@ -30,11 +34,15 @@ class ArtistViewSet(viewsets.ModelViewSet):
     queryset = Artist.objects.all()
     serializer_class = ArtistSerializer
     parser_classes = (MultiPartParser, FormParser)
+
     # Filtering
-    filter_backends = (DjangoFilterBackend, OrderingFilter,)
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+
+    search_fields = ['name', 'birth_data', 'profession', 'school']
     filterset_fields = ['name', 'birth_data', 'profession', 'school']
     ordering_fields = '__all__'
     ordering = ['name']
+
     # Permissions
     permissions_classes = [permissions.IsAdminUser]
 
