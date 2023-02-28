@@ -8,37 +8,63 @@ __all__ = ['Artwork', 'Artist']
 # Create your models here.
 def upload_to(instance, filename):
     _, file_extension = os.path.splitext(filename)
-    return 'images/artworks/{filename}'.format(filename=instance.id) + file_extension
+    return 'images/artworks/{filename}'.format(filename=instance.title) + file_extension
+
+
+def upload_to_artist(instance, filename):
+    _, file_extension = os.path.splitext(filename)
+    return 'images/artists/{filename}'.format(filename=instance.name) + file_extension
 
 
 class Artist(models.Model):
-    name = models.CharField(max_length=50, db_column='artist', primary_key=True)
-    years = models.CharField(max_length=50, db_column='born-died')
-    period = models.CharField(max_length=50)
+    # No primary key is specified
+
+    name = models.CharField(max_length=50, db_column='artist', unique=True)
+    birth_data = models.CharField(max_length=128, db_column='birth data')
+    profession = models.CharField(max_length=50)
+    # Italian, French, German, Flemish, ecc...
     school = models.CharField(max_length=50)
-    base = models.CharField(max_length=50)
-    nationality = models.CharField(max_length=50)
-    sourcePage = models.CharField(max_length=64, db_column='url')
+
+    # Biography
+    biography = models.TextField(db_column='description', null=True)
+    portrait = models.ImageField(upload_to=upload_to_artist, max_length=64)
 
     def __str__(self):
-        return self.name
+        return f'{self.name} - {self.id}'
 
 
 class Artwork(models.Model):
-    id = models.IntegerField(primary_key=True, db_column='ID')
-    artist = models.ForeignKey(Artist, on_delete=models.CASCADE)
-    title = models.CharField(max_length=128)
-    # Extra picture data
-    date = models.CharField(max_length=50, null=True)
-    type = models.CharField(max_length=50, null=True)
-    size = models.CharField(max_length=50, null=True)
-    museum = models.CharField(max_length=128, null=True)
-    # File information
-    resolution = models.CharField(max_length=24)
-    color = models.CharField(max_length=24)
-    file_dimension = models.CharField(max_length=24)
+    # No primary key is specified
 
-    image_url = models.ImageField(upload_to=upload_to, max_length=50, db_column='jpg url')
+    # Can't use name as foreign key since some artists are unknown
+    author = models.CharField(max_length=64)
+    author_id = models.ForeignKey(to=Artist, on_delete=models.CASCADE)
+
+    title = models.CharField(max_length=128)
+
+    date = models.CharField(max_length=128)
+
+    # Technique used like Oil on wood, Pen and ink, Cartoon, ecc...
+    # This could also become a choice field
+    technique = models.CharField(max_length=256)
+
+    # Where the art is currently stored
+    # This could be made into another model
+    location = models.CharField(max_length=128)
+
+    # Form of the artwork as in: painting, tapestry, graphics, architecture, ecc...
+    form = models.CharField(max_length=50)
+
+    # Type of artwork: Study, religious, portrait, fresco...
+    # Could become a choice field
+    type = models.CharField(max_length=50)
+
+    # timeframe where the art was finalized, examples: 1501-1550, 1701-1750, 1551-1500, ecc...
+    timeframe = models.CharField(max_length=50)
+
+    description = models.TextField(null=True)
+
+    image_url = models.ImageField(upload_to=upload_to, max_length=254, db_column='jpg url')
 
     def __str__(self):
         return self.title

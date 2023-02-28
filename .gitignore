@@ -1,6 +1,9 @@
 # User mediaFiles
 images/
 
+# Artwork source
+mysql/data/catalog.csv
+
 # Ide settings
 .idea/
 .vscode/
