@@ -42,6 +42,7 @@ class ArtistSerializer(serializers.ModelSerializer):
 
     # Biography
     biography = serializers.CharField()
+    # Artist portrait
     portrait = serializers.ImageField()
 
     id = serializers.IntegerField()
