@@ -2,10 +2,6 @@ import pandas as pd
 import requests
 
 
-def save(df):
-    df.to_csv('../updated_artwork.csv', header=True, index=False)
-
-
 def update_url(id):
     new_url = f'images/artworks/{id}.jpg'
     return new_url
@@ -20,7 +16,7 @@ def download_image(id, url):
 
 
 def load_data():
-    return pd.read_csv('../data/catalog.csv', nrows=100)
+    return pd.read_csv('../data/urls.csv', nrows=100)
 
 
 def main():
@@ -29,15 +25,16 @@ def main():
 
     print(f'------ Starting the download of {len(df)} images')
 
-    df.apply(lambda art: download_image(
-        art.name, art['image_url']), axis=1)
+    try:
+        df.apply(lambda art: download_image(
+            art.name, art['image_url']), axis=1)
+    except KeyboardInterrupt:
+        print('Stopping scraping...')
+    except Exception as e:
+        print(
+            f'Generic exception while downloading images: {e.__cause__} - {e.__str__()}')
 
-    df['image url'] = df['ARTIST'].apply(lambda x: update_url(x.name))
-    # print(df['image url'])
-    print('Updating dataframe to point to the correct url')
-
-    # save(df)
-    print('end) ------ Saving dataframe')
+    print('Finshed scraping!')
 
 
 if __name__ == "__main__":
