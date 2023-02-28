@@ -17,6 +17,8 @@ def upload_to_artist(instance, filename):
 
 
 class Artist(models.Model):
+    # No primary key is specified
+
     name = models.CharField(max_length=50, db_column='artist', unique=True)
     birth_data = models.CharField(max_length=128, db_column='birth data')
     profession = models.CharField(max_length=50)
@@ -26,8 +28,6 @@ class Artist(models.Model):
     # Biography
     biography = models.TextField(db_column='description', null=True)
     portrait = models.ImageField(upload_to=upload_to_artist, max_length=64)
-
-    id = models.IntegerField(primary_key=True)
 
     def __str__(self):
         return f'{self.name} - {self.id}'

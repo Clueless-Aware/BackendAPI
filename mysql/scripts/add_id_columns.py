@@ -6,9 +6,9 @@ def add_id(name, artists):
     artists_valid = artists[mask]
 
     try:
-        return artists_valid['id'].values[0]
+        return artists_valid.index[0] + 1
     except IndexError:
-        return '-1'
+        return '1'
 
 
 def calculate_mismatch(artworks, artists):
@@ -27,25 +27,29 @@ def save(artist, artworks):
 
 
 def main():
+    print('1) ------- Loading')
+
     artworks = pd.read_csv('../data/catalog.csv')
     artists = pd.read_csv('../data/bio_catalog.csv')
 
-    print('1) ------- Loading')
+    print('2) ------- Remove id from artist')
 
-    artists['id'] = range(0, len(artists.values))
-
-    print('2) ------- Adding id to artist')
-
-    artworks['artist id'] = artworks['AUTHOR'].apply(lambda x: add_id(x, artists))
+    try:
+        artists.drop(columns=['id'], inplace=True)
+    except KeyError:
+        print('2.5) ------- Id table already removed')
 
     print('3) ------- Adding artist id to artwork')
 
-    save(artists, artworks)
+    artworks['artist id'] = artworks['AUTHOR'].apply(lambda x: add_id(x, artists))
 
     print('4) ----- Saving')
 
+    save(artists, artworks)
+
+    print('5) Calculating mismatch between artists and artwork')
+
     calculate_mismatch(artworks, artists)
-    print('5) Calculate mismatch between artists and artwork')
 
 
 if __name__ == "__main__":
