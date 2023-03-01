@@ -19,4 +19,7 @@ class Favorite(models.Model):
     account = models.ForeignKey(to=Account, on_delete=models.CASCADE)
     artwork = models.ForeignKey(to=Artwork, on_delete=models.CASCADE)
 
-    date = models.DateTimeField()
+    date = models.DateField()
+
+    def __str__(self):
+        return f'{self.account} - {self.artwork}'
