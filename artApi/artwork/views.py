@@ -44,7 +44,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     ordering = ['name']
 
     # Permissions
-    permissions_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
 
     def get_permissions(self):
         if self.request.method in ['GET', 'OPTIONS']:
