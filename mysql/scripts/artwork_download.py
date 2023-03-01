@@ -8,7 +8,7 @@ def download_image(artwork_id, url):
     try:
         portrait_data = requests.get(url).content
     except Exception as e:
-        print(f'Warning missing url at id f{artwork_id} - {e.__cause__}')
+        print(f'Warning missing url at id {artwork_id} - {e.__cause__}')
 
     with open(f'../../artApi/images/artworks/{artwork_id}.jpg', 'wb') as handler:
         handler.write(portrait_data)
