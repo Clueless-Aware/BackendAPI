@@ -2,15 +2,15 @@ import pandas as pd
 import requests
 
 
-def update_url(id):
-    new_url = f'images/artworks/{id}.jpg'
-    return new_url
+def download_image(artwork_id, url):
+    print(f'Id {artwork_id} at {url}')
 
+    try:
+        portrait_data = requests.get(url).content
+    except Exception as e:
+        print(f'Warning missing url at id f{artwork_id} - {e.__cause__}')
 
-def download_image(id, url):
-    print(f'Id {id} at {url}')
-    portrait_data = requests.get(url).content
-    with open(f'../../artApi/images/artworks/{id}.jpg', 'wb') as handler:
+    with open(f'../../artApi/images/artworks/{artwork_id}.jpg', 'wb') as handler:
         handler.write(portrait_data)
     return
 
@@ -34,7 +34,7 @@ def main():
         print(
             f'Generic exception while downloading images: {e.__cause__} - {e.__str__()}')
 
-    print('Finshed scraping!')
+    print('Finished scraping!')
 
 
 if __name__ == "__main__":
