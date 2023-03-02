@@ -17,6 +17,8 @@ def download_image(artwork_id, url):
 
 
 def load_data():
+    # skiprows to skip some rows (don't skip row 0)
+    # nrows to select a specific amount of rows
     return pd.read_csv('../data/urls.csv', nrows=100)
 
 
@@ -28,7 +30,7 @@ def main():
 
     try:
         df.apply(lambda art: download_image(
-            art.name, art['image_url']), axis=1)
+            art['id'], art['image_url']), axis=1)
     except KeyboardInterrupt:
         print('Stopping scraping...')
     except Exception as e:

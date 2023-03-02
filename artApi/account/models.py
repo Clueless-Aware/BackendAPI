@@ -1,5 +1,5 @@
 # Create your models here.
-from artwork.models import Artwork
+from artwork.models import Artwork, Artist
 from django.contrib.auth.models import User
 from django.db import models
 
@@ -10,9 +10,11 @@ class Account(models.Model):
     owner = models.OneToOneField(
         User, on_delete=models.CASCADE, primary_key=True)
 
-    full_name = models.CharField(max_length=60)
-    biography = models.TextField()
-    email = models.EmailField()
+    full_name = models.CharField(max_length=60, null=True)
+    biography = models.TextField(null=True)
+    favorite_artist = models.ForeignKey(to=Artist, on_delete=models.CASCADE, null=True)
+
+    is_admin = models.BooleanField(default=False)
 
 
 class Favorite(models.Model):

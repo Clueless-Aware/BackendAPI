@@ -1,4 +1,5 @@
-from artwork.models import Artwork
+from artwork.models import Artwork, Artist
+from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from .models import Account, Favorite
@@ -7,13 +8,18 @@ __all__ = ['AccountSerializer', 'FavoriteSerializer']
 
 
 class AccountSerializer(serializers.ModelSerializer):
-    owner = serializers.CharField(required=True)
-    first_name = serializers.CharField(required=False)
-    last_name = serializers.CharField(required=False)
+    owner = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
+
+    full_name = serializers.CharField()
+    biography = serializers.CharField()
+
+    favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artist.objects.all())
+
+    is_admin = serializers.BooleanField()
 
     class Meta:
         model = Account
-        fields = ('owner_id', 'owner', 'first_name', 'last_name')
+        fields = '__all__'
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
