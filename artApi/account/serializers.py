@@ -9,13 +9,11 @@ __all__ = ['AccountSerializer', 'FavoriteSerializer']
 
 class AccountSerializer(serializers.ModelSerializer):
     owner = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
+    is_admin = serializers.BooleanField()
 
     full_name = serializers.CharField()
     biography = serializers.CharField()
-
     favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artist.objects.all())
-
-    is_admin = serializers.BooleanField()
 
     class Meta:
         model = Account

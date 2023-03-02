@@ -15,6 +15,14 @@ class AccountViewSet(viewsets.ModelViewSet):
     serializer_class = AccountSerializer
     parser_classes = (MultiPartParser, FormParser)
 
+    # Filtering
+    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
+
+    search_fields = ['full_name', 'biography', 'favorite_artist']
+    filterset_fields = ['full_name', 'biography', 'favorite_artist']
+    ordering_fields = '__all__'
+    ordering = ['full_name']
+
     # Permissions
     permission_classes = [permissions.IsAdminUser]
 
@@ -23,8 +31,8 @@ class AccountViewSet(viewsets.ModelViewSet):
             return [permissions.AllowAny()]
         return super().get_permissions()
 
-    def perform_create(self, serializer):
-        serializer.save(creator=self.request.user)
+    # def perform_create(self, serializer):
+    #    serializer.save(creator=self.request.user)
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):
