@@ -78,7 +78,7 @@ ROOT_URLCONF = 'artApi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -190,3 +190,8 @@ SPECTACULAR_SETTINGS = {
 # Media folder
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# AUTH-SERIALIZER ADAPT TO OUR FRONTEND
+REST_AUTH_SERIALIZERS = {
+    'REGISTER_SERIALIZER': 'artApi.custom_serializers.serializer.CustomRegistrationSerializer'
+}
