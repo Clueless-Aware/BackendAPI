@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
-
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -192,6 +191,7 @@ SPECTACULAR_SETTINGS = {
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # AUTH-SERIALIZER ADAPT TO OUR FRONTEND
-REST_AUTH_SERIALIZERS = {
-    'REGISTER_SERIALIZER': 'artApi.custom_serializers.serializer.CustomRegistrationSerializer'
+REST_AUTH = {
+    "PASSWORD_RESET_SERIALIZER": "artApi.serializers.CustomPasswordResetSerializer",
+    'PASSWORD_RESET_USE_SITES_DOMAIN': False,
 }
