@@ -174,7 +174,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # JWT
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ],
 }
 
@@ -194,4 +194,7 @@ SPECTACULAR_SETTINGS = {
 REST_AUTH = {
     "PASSWORD_RESET_SERIALIZER": "artApi.serializers.CustomPasswordResetSerializer",
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,
+    'USE_JWT': True,
+    'JWT_AUTH_HTTPONLY':False
 }
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3OTMyMTY0LCJpYXQiOjE2Nzc5MzE4NjQsImp0aSI6IjRmYmNiNDM1NDdkMzQ3NTk5NWMxNDA5ZDNkMGI3NGZiIiwidXNlcl9pZCI6MX0.AvcdJgOZa8aCYzF1h-mMlXKboO9eYCXo4JpUApjJfbM
