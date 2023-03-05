@@ -6,6 +6,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Artist, Artwork
 from .serializers import ArtistSerializer, ArtworkSerializer
 
+__all__ = ['ArtworkViewSet', 'ArtistViewSet']
+
 
 # Create your views here.
 class ArtworkViewSet(viewsets.ModelViewSet):

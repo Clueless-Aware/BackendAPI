@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
+
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -50,15 +51,17 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'allauth.socialaccount',
     'dj_rest_auth.registration',
-    # Apps
-    'account.apps.AccountConfig',
-    'artwork.apps.ArtworkConfig',
     # For exposing ports
     'corsheaders',
     # Swagger
     'drf_spectacular',
     # Filtering
     'django_filters',
+    # Apps
+    'artwork.apps.ArtworkConfig',
+    'account.apps.AccountConfig',
+    # User model should be last
+    'users'
 ]
 
 MIDDLEWARE = [
@@ -77,7 +80,7 @@ ROOT_URLCONF = 'artApi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR,'templates')],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -195,6 +198,8 @@ REST_AUTH = {
     "PASSWORD_RESET_SERIALIZER": "artApi.serializers.CustomPasswordResetSerializer",
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,
     'USE_JWT': True,
-    'JWT_AUTH_HTTPONLY':False
+    'JWT_AUTH_HTTPONLY': False
 }
 # Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3OTMyMTY0LCJpYXQiOjE2Nzc5MzE4NjQsImp0aSI6IjRmYmNiNDM1NDdkMzQ3NTk5NWMxNDA5ZDNkMGI3NGZiIiwidXNlcl9pZCI6MX0.AvcdJgOZa8aCYzF1h-mMlXKboO9eYCXo4JpUApjJfbM
+
+AUTH_USER_MODEL = "users.User"

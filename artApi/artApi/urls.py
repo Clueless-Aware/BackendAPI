@@ -17,19 +17,21 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path, include
-from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 from django.views.generic import TemplateView
+from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     # Documentation
     path('api/schema', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui', SpectacularSwaggerView.as_view(url_name='schema'), name='swaggerUI'),
-    # this url is used to generate email content
+    # Url used to generate email content
     path('password-reset/confirm/<uidb64>/<token>/', TemplateView.as_view(), name='password_reset_confirm'),
-    # Models viewset
+    # Models view sets
     path('api/', include('artwork.urls')),
     path('api/', include('account.urls')),
+    path('api/', include('users.urls')),
+    # Auth
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/', include('dj_rest_auth.urls')),
 ]
