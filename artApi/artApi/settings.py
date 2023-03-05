@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 import os
 from pathlib import Path
-
 import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -78,7 +77,7 @@ ROOT_URLCONF = 'artApi.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR,'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -175,7 +174,7 @@ REST_FRAMEWORK = {
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # JWT
-        'rest_framework_simplejwt.authentication.JWTAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
     ],
 }
 
@@ -190,3 +189,12 @@ SPECTACULAR_SETTINGS = {
 # Media folder
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+# AUTH-SERIALIZER ADAPT TO OUR FRONTEND
+REST_AUTH = {
+    "PASSWORD_RESET_SERIALIZER": "artApi.serializers.CustomPasswordResetSerializer",
+    'PASSWORD_RESET_USE_SITES_DOMAIN': False,
+    'USE_JWT': True,
+    'JWT_AUTH_HTTPONLY':False
+}
+# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3OTMyMTY0LCJpYXQiOjE2Nzc5MzE4NjQsImp0aSI6IjRmYmNiNDM1NDdkMzQ3NTk5NWMxNDA5ZDNkMGI3NGZiIiwidXNlcl9pZCI6MX0.AvcdJgOZa8aCYzF1h-mMlXKboO9eYCXo4JpUApjJfbM
