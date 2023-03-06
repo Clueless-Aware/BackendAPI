@@ -4,8 +4,6 @@ from .forms import CustomResetForm
 
 
 class CustomPasswordResetSerializer(PasswordResetSerializer):
-    print("class")
-
     @property
     def password_reset_form_class(self):
         print("password")

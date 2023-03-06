@@ -22,7 +22,7 @@ from drf_spectacular.views import SpectacularAPIView, SpectacularSwaggerView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    # Documentation
+    # Documentation with swagger
     path('api/schema', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui', SpectacularSwaggerView.as_view(url_name='schema'), name='swaggerUI'),
     # Url used to generate email content
@@ -32,8 +32,9 @@ urlpatterns = [
     path('api/', include('account.urls')),
     path('api/', include('users.urls', namespace='users')),
     # Auth
-    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/', include('dj_rest_auth.urls')),
+    # Registration
+    path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
 ]
 
 # Media storage location

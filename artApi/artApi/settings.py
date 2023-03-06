@@ -173,7 +173,7 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.AllowAny',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        # auth
+        # Auth
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
         # JWT
@@ -193,13 +193,13 @@ SPECTACULAR_SETTINGS = {
 # MEDIA_URL = '/media/'
 # MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-# AUTH-SERIALIZER ADAPT TO OUR FRONTEND
+# Drf auth settings
 REST_AUTH = {
+    'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
     "PASSWORD_RESET_SERIALIZER": "artApi.serializers.CustomPasswordResetSerializer",
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,
     'USE_JWT': True,
     'JWT_AUTH_HTTPONLY': False
 }
-# Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNjc3OTMyMTY0LCJpYXQiOjE2Nzc5MzE4NjQsImp0aSI6IjRmYmNiNDM1NDdkMzQ3NTk5NWMxNDA5ZDNkMGI3NGZiIiwidXNlcl9pZCI6MX0.AvcdJgOZa8aCYzF1h-mMlXKboO9eYCXo4JpUApjJfbM
 
 AUTH_USER_MODEL = "users.User"
