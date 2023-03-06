@@ -3,36 +3,10 @@ from rest_framework import viewsets, permissions
 from rest_framework.filters import OrderingFilter, SearchFilter
 from rest_framework.parsers import MultiPartParser, FormParser
 
-from .models import Account, Favorite
-from .serializers import AccountSerializer, FavoriteSerializer
+from .models import Favorite
+from .serializers import FavoriteSerializer
 
-__all__ = ['AccountViewSet', 'FavoriteViewSet']
-
-
-# Create your views here.
-class AccountViewSet(viewsets.ModelViewSet):
-    queryset = Account.objects.order_by('owner_id')
-    serializer_class = AccountSerializer
-    parser_classes = (MultiPartParser, FormParser)
-
-    # Filtering
-    filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
-
-    search_fields = ['full_name', 'biography', 'favorite_artist']
-    filterset_fields = ['full_name', 'biography', 'favorite_artist']
-    ordering_fields = '__all__'
-    ordering = ['full_name']
-
-    # Permissions
-    permission_classes = [permissions.IsAdminUser]
-
-    def get_permissions(self):
-        if self.request.method in ['GET', 'OPTIONS']:
-            return [permissions.AllowAny()]
-        return super().get_permissions()
-
-    # def perform_create(self, serializer):
-    #    serializer.save(creator=self.request.user)
+__all__ = ['FavoriteViewSet']
 
 
 class FavoriteViewSet(viewsets.ModelViewSet):

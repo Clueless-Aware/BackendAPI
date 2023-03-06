@@ -1,28 +1,15 @@
-from artwork.models import Artwork, Artist
-from django.contrib.auth import get_user_model
+from artwork.models import Artwork
 from rest_framework import serializers
+from users.models import User
 
-from .models import Account, Favorite
+from .models import Favorite
 
-__all__ = ['AccountSerializer', 'FavoriteSerializer']
-
-
-class AccountSerializer(serializers.ModelSerializer):
-    owner = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=get_user_model().objects.all())
-    is_admin = serializers.BooleanField()
-
-    full_name = serializers.CharField()
-    biography = serializers.CharField()
-    favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artist.objects.all())
-
-    class Meta:
-        model = Account
-        fields = '__all__'
+__all__ = ['FavoriteSerializer']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):
     artwork = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artwork.objects.all())
-    account = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Account.objects.all())
+    account = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
 
     date = serializers.DateField()
 
