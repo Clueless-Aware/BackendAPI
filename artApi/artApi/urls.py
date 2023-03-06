@@ -30,7 +30,7 @@ urlpatterns = [
     # Models view sets
     path('api/', include('artwork.urls')),
     path('api/', include('account.urls')),
-    path('api/', include('users.urls')),
+    path('api/', include('users.urls', namespace='users')),
     # Auth
     path('api/auth/registration/', include('dj_rest_auth.registration.urls')),
     path('api/auth/', include('dj_rest_auth.urls')),
