@@ -6,10 +6,11 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True)
+    password = serializers.CharField(write_only=True, required=True)
 
     favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
                                                          queryset=Artist.objects.all(), required=False)
+    profile_picture = serializers.ImageField(required=False)
 
     class Meta:
         model = User
@@ -26,6 +27,11 @@ class UserSerializer(serializers.ModelSerializer):
         user.save()
         return user
 
+    def get_profile_picture(self, user):
+        request = self.context.get('request')
+        profile_pic_url = user.profile_picture.url
+        return request.build_absolute_uri(profile_pic_url)
+
 
 class CustomRegisterSerializer(RegisterSerializer):
     first_name = serializers.CharField(required=False)
@@ -34,9 +40,9 @@ class CustomRegisterSerializer(RegisterSerializer):
     favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
                                                          queryset=Artist.objects.all(), required=False)
     biography = serializers.CharField(required=False)
+    profile_picture = serializers.ImageField(required=False)
 
     def get_cleaned_data(self):
-        print('Getting cleaned data :)')
         super(CustomRegisterSerializer, self).get_cleaned_data()
         return {
             'username': self.validated_data.get('username', ''),
@@ -47,9 +53,15 @@ class CustomRegisterSerializer(RegisterSerializer):
             'last_name': self.validated_data.get('last_name', ''),
             'favorite_artist': self.validated_data.get('favorite_artist', ''),
             'biography': self.validated_data.get('biography', ''),
+            'profile_picture': self.validated_data.get('profile_picture', ''),
 
             # Users by default can't be created as staff
             'is_staff': False,
             'is_superuser': False,
             'is_active': True,
         }
+
+    def get_profile_picture(self, user):
+        request = self.context.get('request')
+        profile_pic_url = user.profile_picture.url
+        return request.build_absolute_uri(profile_pic_url)

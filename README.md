@@ -52,8 +52,8 @@ N.B.: If you are running migrations for the first time you should get an error w
 To fix this you need to run the following commands in your Mysql bash:
 
 ```sql
-    INSERT INTO django_migrations (app, name, applied)
-    VALUES ('users', '0001_initial', CURRENT_TIMESTAMP);
+INSERT INTO django_migrations (app, name, applied)
+VALUES ('users', '0001_initial', CURRENT_TIMESTAMP);
 
 UPDATE django_content_type
 SET app_label = 'users'
