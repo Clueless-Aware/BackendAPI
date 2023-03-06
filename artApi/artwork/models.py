@@ -67,4 +67,4 @@ class Artwork(models.Model):
     image_url = models.ImageField(upload_to=upload_to, max_length=254, db_column='jpg url')
 
     def __str__(self):
-        return self.title
+        return f'{self.title} - f{self.id}'

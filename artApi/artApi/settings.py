@@ -186,7 +186,7 @@ SPECTACULAR_SETTINGS = {
     "TITLE": "Art api backend",
     "DESCRIPTION": "Our api backend with DRF :)",
     "VERSION": "0.0.1"
-    # OTHER SETTINGS
+    # Other settings
 }
 
 # Media folder
@@ -195,6 +195,7 @@ SPECTACULAR_SETTINGS = {
 
 # Drf auth settings
 REST_AUTH = {
+    'USER_DETAILS_SERIALIZER': 'users.serializers.UserSerializer',
     'REGISTER_SERIALIZER': 'users.serializers.CustomRegisterSerializer',
     "PASSWORD_RESET_SERIALIZER": "artApi.serializers.CustomPasswordResetSerializer",
     'PASSWORD_RESET_USE_SITES_DOMAIN': False,

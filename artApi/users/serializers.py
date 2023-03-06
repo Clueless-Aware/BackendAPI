@@ -48,7 +48,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'favorite_artist': self.validated_data.get('favorite_artist', ''),
             'biography': self.validated_data.get('biography', ''),
 
-            # Users by default are created as normal user
+            # Users by default can't be created as staff
             'is_staff': False,
             'is_superuser': False,
             'is_active': True,
