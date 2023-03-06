@@ -15,8 +15,8 @@ class UserViewSet(viewsets.ModelViewSet):
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
 
-    search_fields = ['username']
-    filterset_fields = ['username']
+    search_fields = ['username', 'favorite_artist']
+    filterset_fields = ['username', 'favorite_artist']
     ordering_fields = '__all__'
     ordering = ['username']
 
@@ -24,6 +24,6 @@ class UserViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminUser]
 
     def get_permissions(self):
-        if self.request.method in ['GET', 'OPTIONS']:
+        if self.request.method in ['POST']:
             return [permissions.AllowAny()]
         return super().get_permissions()

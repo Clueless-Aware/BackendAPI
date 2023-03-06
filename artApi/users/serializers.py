@@ -15,6 +15,7 @@ class UserSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
+        # Users created via serializer can't be admins
         user.is_staff = False
         user.is_superuser = False
         user.set_password(validated_data['password'])

@@ -23,9 +23,9 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     ordering = ['date']
 
     # Permissions
-    permission_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
 
     def get_permissions(self):
         if self.request.method in ['GET', 'OPTIONS']:
-            return [permissions.AllowAny()]
+            return [permissions.IsAdminUser()]
         return super().get_permissions()
