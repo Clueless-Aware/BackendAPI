@@ -15,7 +15,7 @@ def upload_to(instance, filename):
 class User(AbstractUser):
     biography = models.TextField(null=True)
     favorite_artist = models.ForeignKey(to=Artist, on_delete=models.CASCADE, null=True)
-    profile_picture = models.ImageField(upload_to=upload_to)
+    profile_picture = models.ImageField(upload_to=upload_to, default='images/users/default/unknown.jpg')
 
     def __str__(self):
         return self.username

@@ -1,3 +1,4 @@
+from allauth.account.adapter import get_adapter
 from artwork.models import Artist
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
@@ -51,15 +52,33 @@ class CustomRegisterSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
-            'favorite_artist': self.validated_data.get('favorite_artist', ''),
-            'biography': self.validated_data.get('biography', ''),
-            'profile_picture': self.validated_data.get('profile_picture', ''),
-
-            # Users by default can't be created as staff
-            'is_staff': False,
-            'is_superuser': False,
-            'is_active': True,
+            'favorite_artist': self.validated_data.get('favorite_artist'),
+            'biography': self.validated_data.get('biography'),
+            'profile_picture': self.validated_data.get('profile_picture'),
         }
+
+    def save(self, request):
+        adapter = get_adapter()
+        user = adapter.new_user(request)
+        self.cleaned_data = self.get_cleaned_data()
+
+        user.favorite_artist = self.cleaned_data.get('favorite_artist')
+        user.biography = self.cleaned_data.get('biography')
+        if self.cleaned_data.get('profile_picture') is not None:
+            user.profile_picture = self.cleaned_data.get('profile_picture')
+
+        # Users created via register serializer can't be admin
+        user.is_staff = False
+        user.is_superuser = False
+        user.is_active = True
+
+        user.save()
+        adapter.save_user(request, user, self)
+        return user
+
+    class Meta:
+        model = User
+        fields = '__all__'
 
     def get_profile_picture(self, user):
         request = self.context.get('request')
