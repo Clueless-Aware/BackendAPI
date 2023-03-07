@@ -1,13 +1,14 @@
 from rest_framework.routers import SimpleRouter
 
-from .views import FavoriteViewSet
+from .views import FavoriteViewSet, RequestViewSet
 
 __all__ = ['urlpatterns']
 
 app_name = 'account_api'
 
-userRouter = SimpleRouter()
+accountRouter = SimpleRouter()
 
-userRouter.register(r'favorites', viewset=FavoriteViewSet, basename='favorites')
+accountRouter.register('favorites', viewset=FavoriteViewSet, basename='Favorites')
+accountRouter.register('requests', viewset=RequestViewSet, basename='Requests')
 
-urlpatterns = userRouter.urls
+urlpatterns = accountRouter.urls
