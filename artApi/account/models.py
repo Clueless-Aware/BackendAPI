@@ -1,10 +1,16 @@
 # Create your models here.
-from django.contrib.auth.models import User
+from artwork.models import Artwork
 from django.db import models
+from users.models import User
+
+__all__ = ['Favorite']
 
 
-class Account(models.Model):
-    owner = models.OneToOneField(
-        User, on_delete=models.CASCADE, primary_key=True)
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+class Favorite(models.Model):
+    account = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    artwork = models.ForeignKey(to=Artwork, on_delete=models.CASCADE)
+
+    date = models.DateField()
+
+    def __str__(self):
+        return f'{self.account} - {self.artwork}'

@@ -46,11 +46,24 @@ Make sure to have docker installed and to be in the root directory
   docker-compose up
 ```
 
-Always check with docker-desktop if everything is running correctly
+Always check with docker-desktop if everything is running correctly.
+
+N.B.: If you are running migrations for the first time you should get an error with migrations history.
+To fix this you need to run the following commands in your Mysql bash:
+
+```sql
+INSERT INTO django_migrations (app, name, applied)
+VALUES ('users', '0001_initial', CURRENT_TIMESTAMP);
+
+UPDATE django_content_type
+SET app_label = 'users'
+WHERE app_label = 'auth'
+  and model = 'user';
+```
 
 ### Adding dependencies
 
-Install depndencies with pipenv. Restart the container and you should have everything running correcctly.
+Install dependencies with pipenv. Restart the container, and you should have everything running correctly.
 
 ## Django commands
 
@@ -60,6 +73,7 @@ Install depndencies with pipenv. Restart the container and you should have every
 * `python manage.py collectstatic`
 
 ## Running il local network
+
 - To run this project on a local network, you will need to add the following environment variables to your .env file.
 - Set private network
 

@@ -6,6 +6,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from .models import Artist, Artwork
 from .serializers import ArtistSerializer, ArtworkSerializer
 
+__all__ = ['ArtworkViewSet', 'ArtistViewSet']
+
 
 # Create your views here.
 class ArtworkViewSet(viewsets.ModelViewSet):
@@ -44,7 +46,7 @@ class ArtistViewSet(viewsets.ModelViewSet):
     ordering = ['name']
 
     # Permissions
-    permissions_classes = [permissions.IsAdminUser]
+    permission_classes = [permissions.IsAdminUser]
 
     def get_permissions(self):
         if self.request.method in ['GET', 'OPTIONS']:
