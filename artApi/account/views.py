@@ -1,7 +1,6 @@
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework import viewsets, permissions
 from rest_framework.filters import OrderingFilter, SearchFilter
-from rest_framework.parsers import MultiPartParser, FormParser
 
 from .models import Favorite, Request
 from .serializers import FavoriteSerializer, RequestSerializer, UpdateDefaultSerializerMixin, RequestUpdateSerializer
@@ -12,7 +11,6 @@ __all__ = ['FavoriteViewSet', 'RequestViewSet']
 class FavoriteViewSet(viewsets.ModelViewSet):
     queryset = Favorite.objects.all()
     serializer_class = FavoriteSerializer
-    parser_classes = (MultiPartParser, FormParser)
 
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
@@ -23,7 +21,7 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     ordering = ['date']
 
     # Permissions
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_permissions(self):
         return super().get_permissions()
@@ -33,7 +31,6 @@ class RequestViewSet(UpdateDefaultSerializerMixin, viewsets.ModelViewSet):
     queryset = Request.objects.all()
     default_serializer_class = RequestSerializer
     update_serializer_class = RequestUpdateSerializer
-    parser_classes = (MultiPartParser, FormParser)
 
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
@@ -44,7 +41,7 @@ class RequestViewSet(UpdateDefaultSerializerMixin, viewsets.ModelViewSet):
     ordering = ['date']
 
     # Permissions
-    permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
 
     def get_permissions(self):
         # if self.request.method in ['GET', 'OPTIONS']:
