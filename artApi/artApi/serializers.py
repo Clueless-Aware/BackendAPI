@@ -6,21 +6,17 @@ from .forms import CustomResetForm
 class CustomPasswordResetSerializer(PasswordResetSerializer):
     @property
     def password_reset_form_class(self):
-        print("password")
         return CustomResetForm
 
     def validate_email(self, value):
-        print("validate")
         return super().validate_email(value)
 
     def get_email_options(self):
-        print("get_email")
         return {
             'email_template_name': 'password_reset_email.html'
         }
 
     def save(self):
-        print("save")
         request = self.context.get('request')
         # Set some values to trigger the send_email method.
         opts = {

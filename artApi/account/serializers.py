@@ -5,7 +5,7 @@ from users.models import User
 
 from .models import Favorite, Request
 
-__all__ = ['FavoriteSerializer', 'RequestSerializer']
+__all__ = ['FavoriteSerializer', 'RequestSerializer', 'RequestUpdateSerializer', 'UpdateDefaultSerializerMixin']
 
 
 class FavoriteSerializer(serializers.ModelSerializer):

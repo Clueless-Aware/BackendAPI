@@ -26,8 +26,6 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
 
     def get_permissions(self):
-        if self.request.method in ['GET', 'OPTIONS']:
-            return [permissions.IsAdminUser()]
         return super().get_permissions()
 
 
@@ -49,6 +47,6 @@ class RequestViewSet(UpdateDefaultSerializerMixin, viewsets.ModelViewSet):
     permission_classes = [permissions.IsAdminUser, permissions.IsAuthenticated]
 
     def get_permissions(self):
-        if self.request.method in ['GET', 'OPTIONS']:
-            return [permissions.IsAdminUser()]
+        # if self.request.method in ['GET', 'OPTIONS']:
+        #    return [permissions.IsAdminUser()]
         return super().get_permissions()
