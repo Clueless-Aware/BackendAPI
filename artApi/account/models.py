@@ -22,6 +22,7 @@ class Request(models.Model):
     subject = models.CharField(max_length=64)
     content = models.TextField(null=True)
     critical = models.BooleanField(default=False)
+    seen = models.BooleanField(default=False)
 
     date = models.DateField(auto_now_add=True)
 

@@ -42,6 +42,7 @@ class CustomRegisterSerializer(RegisterSerializer):
                                                          queryset=Artist.objects.all(), required=False)
     biography = serializers.CharField(required=False)
     profile_picture = serializers.ImageField(required=False)
+    email = serializers.EmailField(required=True)
 
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
