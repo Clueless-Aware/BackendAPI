@@ -18,7 +18,7 @@ class UserViewSet(viewsets.ModelViewSet):
     search_fields = ['username', 'favorite_artist']
     filterset_fields = ['username', 'favorite_artist']
     ordering_fields = '__all__'
-    ordering = ['username']
+    ordering = ['id']
 
     # Permissions
     permission_classes = [permissions.IsAdminUser]

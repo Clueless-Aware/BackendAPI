@@ -6,8 +6,8 @@ __all__ = ['urlpatterns']
 
 app_name = 'artworks_api'
 
-artworkRouter = SimpleRouter()
+userRouter = SimpleRouter()
 
-artworkRouter.register(r'users', viewset=UserViewSet, basename='user')
+userRouter.register('users', viewset=UserViewSet, basename='user')
 
-urlpatterns = artworkRouter.urls
+urlpatterns = userRouter.urls

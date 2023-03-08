@@ -8,7 +8,7 @@ app_name = 'artworks_api'
 
 artworkRouter = SimpleRouter()
 
-artworkRouter.register(r'artworks', viewset=ArtworkViewSet, basename='artwork')
-artworkRouter.register(r'artists', viewset=ArtistViewSet, basename='artist')
+artworkRouter.register('artworks', viewset=ArtworkViewSet, basename='artwork')
+artworkRouter.register('artists', viewset=ArtistViewSet, basename='artist')
 
 urlpatterns = artworkRouter.urls
