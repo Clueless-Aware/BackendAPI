@@ -1,5 +1,5 @@
 from allauth.account.adapter import get_adapter
-from artwork.models import Artist
+from artwork.models import Artist, Artwork
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 
@@ -12,6 +12,9 @@ class UserSerializer(serializers.ModelSerializer):
     favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
                                                          queryset=Artist.objects.all(), required=False)
     profile_picture = serializers.ImageField(required=False)
+
+    user_favorites = serializers.HyperlinkedRelatedField(many=True, view_name='accounts:favorite-detail',
+                                                         queryset=Artwork.objects.all(), lookup_field='pk')
 
     class Meta:
         model = User

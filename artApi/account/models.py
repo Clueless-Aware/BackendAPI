@@ -8,13 +8,13 @@ __all__ = ['Favorite', 'Request']
 
 
 class Favorite(models.Model):
-    account = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name='user_favorites')
     artwork = models.ForeignKey(to=Artwork, on_delete=models.CASCADE)
 
     date = models.DateField(auto_now_add=True)
 
     def __str__(self):
-        return f'{self.account} - {self.artwork}'
+        return f'{self.user} - {self.artwork}'
 
 
 class Request(models.Model):

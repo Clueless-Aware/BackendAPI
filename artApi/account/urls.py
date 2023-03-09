@@ -8,7 +8,7 @@ app_name = 'account_api'
 
 accountRouter = SimpleRouter()
 
-accountRouter.register('favorites', viewset=FavoriteViewSet, basename='Favorites')
-accountRouter.register('requests', viewset=RequestViewSet, basename='Requests')
+accountRouter.register(r'favorites', viewset=FavoriteViewSet, basename='favorite')
+accountRouter.register(r'requests', viewset=RequestViewSet, basename='request')
 
 urlpatterns = accountRouter.urls

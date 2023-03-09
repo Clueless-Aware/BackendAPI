@@ -9,7 +9,6 @@ from .serializers import ArtistSerializer, ArtworkSerializer
 __all__ = ['ArtworkViewSet', 'ArtistViewSet']
 
 
-# Create your views here.
 class ArtworkViewSet(viewsets.ModelViewSet):
     queryset = Artwork.objects.all()
     serializer_class = ArtworkSerializer
