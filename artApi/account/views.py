@@ -15,8 +15,8 @@ class FavoriteViewSet(viewsets.ModelViewSet):
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
 
-    search_fields = ['artwork', 'account', 'date']
-    filterset_fields = ['artwork', 'account', 'date']
+    search_fields = ['artwork', 'user', 'date']
+    filterset_fields = ['artwork', 'user', 'date']
     ordering_fields = '__all__'
     ordering = ['date']
 
