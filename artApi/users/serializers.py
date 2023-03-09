@@ -1,5 +1,5 @@
 from allauth.account.adapter import get_adapter
-from artwork.models import Artist, Artwork
+from artwork.models import Artist
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 
@@ -8,17 +8,24 @@ from .models import User
 
 class UserSerializer(serializers.ModelSerializer):
     password = serializers.CharField(write_only=True, required=True)
+    date_joined = serializers.DateTimeField(read_only=True, required=False)
+    last_login = serializers.DateTimeField(read_only=True, required=False)
+
+    is_staff = serializers.BooleanField(read_only=True, required=False)
+    is_superuser = serializers.BooleanField(read_only=True, required=False)
 
     favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
                                                          queryset=Artist.objects.all(), required=False)
     profile_picture = serializers.ImageField(required=False)
 
     user_favorites = serializers.HyperlinkedRelatedField(many=True, view_name='accounts:favorite-detail',
-                                                         queryset=Artwork.objects.all(), lookup_field='pk')
+                                                         lookup_field='pk', read_only=True)
 
     class Meta:
         model = User
-        fields = '__all__'
+        fields = ['id', 'date_joined', 'last_login', 'favorite_artist', 'profile_picture', 'user_favorites',
+                  'is_superuser', 'password',
+                  'username', 'first_name', 'last_name', 'is_staff', 'is_active', 'biography']
 
     def create(self, validated_data):
         user = super(UserSerializer, self).create(validated_data)
@@ -28,8 +35,21 @@ class UserSerializer(serializers.ModelSerializer):
         user.is_active = True
 
         user.set_password(validated_data['password'])
+        user.biography = (validated_data['biography'])
         user.save()
         return user
+
+    def update(self, instance, validated_data):
+        instance.first_name = validated_data.get('first_name', instance.first_name)
+        instance.last_name = validated_data.get('last_name', instance.last_name)
+        instance.email = validated_data.get('email', instance.email)
+        instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
+        instance.favorite_artist = validated_data.get('favorite_artist', instance.favorite_artist)
+        instance.username = validated_data.get('username', instance.username)
+        instance.biography = validated_data.get('biography', instance.biography)
+
+        instance.save()
+        return instance
 
     def get_profile_picture(self, user):
         request = self.context.get('request')
@@ -46,6 +66,9 @@ class CustomRegisterSerializer(RegisterSerializer):
     biography = serializers.CharField(required=False)
     profile_picture = serializers.ImageField(required=False)
     email = serializers.EmailField(required=True)
+
+    def __init__(self):
+        self.cleaned_data = None
 
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
