@@ -7,7 +7,6 @@ from .models import User
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True)
     date_joined = serializers.DateTimeField(read_only=True, required=False)
     last_login = serializers.DateTimeField(read_only=True, required=False)
 
@@ -24,7 +23,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'date_joined', 'last_login', 'favorite_artist', 'profile_picture', 'user_favorites',
-                  'is_superuser', 'password',
+                  'is_superuser', 'email',
                   'username', 'first_name', 'last_name', 'is_staff', 'is_active', 'biography']
 
     def create(self, validated_data):
