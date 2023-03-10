@@ -28,8 +28,8 @@ urlpatterns = [
     # Url used to generate email content
     path('password-reset/confirm/<uidb64>/<token>/', TemplateView.as_view(), name='password_reset_confirm'),
     # Models view sets
-    path('api/', include('artwork.urls')),
-    path('api/', include('account.urls')),
+    path('api/', include('artwork.urls', namespace='artworks')),
+    path('api/', include('account.urls', namespace='accounts')),
     path('api/', include('users.urls', namespace='users')),
     # Auth
     path('api/auth/', include('dj_rest_auth.urls')),

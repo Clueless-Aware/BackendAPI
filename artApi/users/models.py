@@ -20,4 +20,4 @@ class User(AbstractUser):
                                         default='images/users/default/unknown.jpg')
 
     def __str__(self):
-        return self.username
+        return f'{self.username} - {self.email}'
