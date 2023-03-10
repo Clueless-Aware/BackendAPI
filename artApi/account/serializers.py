@@ -10,7 +10,7 @@ __all__ = ['FavoriteSerializer', 'RequestSerializer', 'RequestUpdateSerializer',
 
 class FavoriteSerializer(serializers.ModelSerializer):
     artwork = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artwork.objects.all())
-    account = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
+    user = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
 
     class Meta:
         model = Favorite
