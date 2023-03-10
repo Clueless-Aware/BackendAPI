@@ -13,6 +13,13 @@ class Favorite(models.Model):
 
     date = models.DateField(auto_now_add=True)
 
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=['user', 'artwork'], name='unique_user_artwork_combination'
+            )
+        ]
+
     def __str__(self):
         return f'{self.user} - {self.artwork}'
 
