@@ -1,6 +1,6 @@
 import os
 
-from artwork.models import Artwork
+from artwork.models import Artwork, Artist
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 
@@ -15,7 +15,7 @@ def upload_to_user(instance, filename):
 
 class User(AbstractUser):
     biography = models.TextField(null=True)
-    # favorite_artist = models.ForeignKey(to=Artist, on_delete=models.CASCADE, null=True)
+    favorite_artist = models.ForeignKey(to=Artist, on_delete=models.CASCADE, null=True)
     profile_picture = models.ImageField(upload_to='images/users/', max_length=256,
                                         default='images/users/default/unknown.jpg')
     bookmarked_artworks = models.ManyToManyField(Artwork, through='Bookmark', through_fields=('user', 'artwork'),

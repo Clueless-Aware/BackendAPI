@@ -1,4 +1,5 @@
 from allauth.account.adapter import get_adapter
+from artwork.models import Artist
 from artwork.serializers import ArtworkSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
@@ -15,8 +16,8 @@ class UserSerializer(serializers.ModelSerializer):
     is_staff = serializers.BooleanField(read_only=True, required=False)
     is_superuser = serializers.BooleanField(read_only=True, required=False)
 
-    # favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
-    #                                                     queryset=Artist.objects.all(), required=False)
+    favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
+                                                         queryset=Artist.objects.all(), required=False)
     profile_picture = serializers.ImageField(required=False)
 
     bookmarked_artworks = ArtworkSerializer(many=True, required=False, read_only=True)
@@ -24,7 +25,7 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         fields = ['id', 'date_joined', 'last_login', 'profile_picture',
-                  'is_superuser', 'email', 'bookmarked_artworks',  # 'favorite_artist',
+                  'is_superuser', 'email', 'bookmarked_artworks', 'favorite_artist',
                   'username', 'first_name', 'last_name', 'is_staff', 'is_active', 'biography']
 
     def create(self, validated_data):
@@ -44,7 +45,7 @@ class UserSerializer(serializers.ModelSerializer):
         instance.last_name = validated_data.get('last_name', instance.last_name)
         instance.email = validated_data.get('email', instance.email)
         instance.profile_picture = validated_data.get('profile_picture', instance.profile_picture)
-        # instance.favorite_artist = validated_data.get('favorite_artist', instance.favorite_artist)
+        instance.favorite_artist = validated_data.get('favorite_artist', instance.favorite_artist)
         instance.username = validated_data.get('username', instance.username)
         instance.biography = validated_data.get('biography', instance.biography)
 
@@ -61,8 +62,8 @@ class CustomRegisterSerializer(RegisterSerializer):
     first_name = serializers.CharField(required=False)
     last_name = serializers.CharField(required=False)
 
-    # favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
-    #                                                     queryset=Artist.objects.all(), required=False)
+    favorite_artist = serializers.PrimaryKeyRelatedField(many=False, read_only=False,
+                                                         queryset=Artist.objects.all(), required=False)
     biography = serializers.CharField(required=False)
     profile_picture = serializers.ImageField(required=False)
     email = serializers.EmailField(required=True)
@@ -79,7 +80,7 @@ class CustomRegisterSerializer(RegisterSerializer):
             'email': self.validated_data.get('email', ''),
             'first_name': self.validated_data.get('first_name', ''),
             'last_name': self.validated_data.get('last_name', ''),
-            # 'favorite_artist': self.validated_data.get('favorite_artist'),
+            'favorite_artist': self.validated_data.get('favorite_artist'),
             'biography': self.validated_data.get('biography'),
             'profile_picture': self.validated_data.get('profile_picture'),
         }
@@ -89,7 +90,7 @@ class CustomRegisterSerializer(RegisterSerializer):
         user = adapter.new_user(request)
         self.cleaned_data = self.get_cleaned_data()
 
-        # user.favorite_artist = self.cleaned_data.get('favorite_artist')
+        user.favorite_artist = self.cleaned_data.get('favorite_artist')
         user.biography = self.cleaned_data.get('biography')
         if self.cleaned_data.get('profile_picture') is not None:
             user.profile_picture = self.cleaned_data.get('profile_picture')

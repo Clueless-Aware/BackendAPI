@@ -15,8 +15,8 @@ class UserViewSet(viewsets.ModelViewSet):
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
 
-    search_fields = ['username']  # 'favorite_artist'
-    filterset_fields = ['username', ]  # 'favorite_artist'
+    search_fields = ['username', 'favorite_artist']
+    filterset_fields = ['username', 'favorite_artist']
     ordering_fields = '__all__'
     ordering = ['id']
 
