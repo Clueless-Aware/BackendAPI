@@ -1,4 +1,5 @@
 from django.core.mail import send_mail
+from django.template.loader import render_to_string
 from rest_framework import serializers
 from users.models import User
 
@@ -21,14 +22,22 @@ class RequestSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = Request.objects.create(**validated_data)
         request.seen = False
-        request.save()
+        header = f'Critical message from{request.from_user.username} please respond ASAP:\n' if request.critical else f'Message from {request.from_user.username}:\n'
+        plain_message = f'{header}{request.content}\nOn {request.date}'
+        context = {'username': request.from_user.username,
+                   'critical': request.critical,
+                   'content': request.content,
+                   'date': request.date}
 
         send_mail(request.subject,
-                  request.content + f'\nOn {request.date}',
+                  plain_message,
                   request.from_user.email,
                   ['admin@webmaster'],
-                  fail_silently=False)
+                  fail_silently=False,
+                  html_message=render_to_string('account/email/request.html', context)
+                  )
 
+        request.save()
         return request
 
 
