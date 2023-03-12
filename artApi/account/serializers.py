@@ -1,20 +1,10 @@
-from artwork.models import Artwork
 from django.core.mail import send_mail
 from rest_framework import serializers
 from users.models import User
 
-from .models import Favorite, Request
+from .models import Request
 
-__all__ = ['FavoriteSerializer', 'RequestSerializer', 'RequestUpdateSerializer', 'UpdateDefaultSerializerMixin']
-
-
-class FavoriteSerializer(serializers.ModelSerializer):
-    artwork = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=Artwork.objects.all())
-    user = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
-
-    class Meta:
-        model = Favorite
-        fields = '__all__'
+__all__ = ['RequestSerializer', 'RequestUpdateSerializer', 'UpdateDefaultSerializerMixin']
 
 
 class RequestSerializer(serializers.ModelSerializer):
