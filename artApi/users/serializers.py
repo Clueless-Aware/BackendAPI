@@ -21,6 +21,7 @@ class UserSerializer(serializers.ModelSerializer):
     profile_picture = serializers.ImageField(required=False)
 
     bookmarked_artworks = ArtworkSerializer(many=True, required=False, read_only=True)
+    user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
 
     user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
 

@@ -37,7 +37,7 @@ class BookmarkViewSet(viewsets.ModelViewSet):
     search_fields = ['user', 'artwork', 'date']
     filterset_fields = ['user', 'artwork', 'date']
     ordering_fields = '__all__'
-    ordering = ['id']
+    ordering = ['date']
 
     # Permissions
     permission_classes = [permissions.IsAuthenticated]
