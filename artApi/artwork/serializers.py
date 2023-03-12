@@ -21,9 +21,11 @@ class ArtworkSerializer(serializers.ModelSerializer):
     # Type of artwork: Study, religious, portrait, fresco...
     type = serializers.CharField()
     timeframe = serializers.CharField()
-    description = serializers.CharField()
+    description = serializers.CharField(required=False)
 
-    image_url = serializers.ImageField()
+    image_url = serializers.ImageField(required=False)
+
+    # users = serializers.ManyRelatedField(source='favorites_artworks')
 
     def get_image_url(self, artwork):
         request = self.context.get('request')
