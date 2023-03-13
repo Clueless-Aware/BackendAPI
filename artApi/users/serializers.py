@@ -23,8 +23,6 @@ class UserSerializer(serializers.ModelSerializer):
     bookmarked_artworks = ArtworkSerializer(many=True, required=False, read_only=True)
     user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
 
-    user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
-
     class Meta:
         model = User
         fields = ['id', 'date_joined', 'last_login', 'profile_picture', 'user_bookmarks',
