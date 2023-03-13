@@ -34,8 +34,8 @@ class BookmarkViewSet(viewsets.ModelViewSet):
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
 
-    search_fields = ['user', 'artwork']
-    filterset_fields = ['user', 'artwork']
+    search_fields = ['user', 'artwork', 'date']
+    filterset_fields = ['user', 'artwork', 'date']
     ordering_fields = '__all__'
     ordering = ['id']
 

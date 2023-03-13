@@ -22,9 +22,11 @@ class UserSerializer(serializers.ModelSerializer):
 
     bookmarked_artworks = ArtworkSerializer(many=True, required=False, read_only=True)
 
+    user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
+
     class Meta:
         model = User
-        fields = ['id', 'date_joined', 'last_login', 'profile_picture',
+        fields = ['id', 'date_joined', 'last_login', 'profile_picture', 'user_bookmarks',
                   'is_superuser', 'email', 'bookmarked_artworks', 'favorite_artist',
                   'username', 'first_name', 'last_name', 'is_staff', 'is_active', 'biography']
 
@@ -67,9 +69,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     biography = serializers.CharField(required=False)
     profile_picture = serializers.ImageField(required=False)
     email = serializers.EmailField(required=True)
-
-    def __init__(self):
-        self.cleaned_data = None
 
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
