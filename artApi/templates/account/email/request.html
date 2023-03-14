@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Request from an user</title>
+</head>
+<body>
+<p>
+    Greetings admin there is a new request from our app by user {{ username }}:
+</p>
+<p>
+    {% if critical %}
+        This is a critical message
+        <hr/>
+    {% else %}
+        This is not a critical message
+        <hr/>
+    {% endif %}
+{{ content }}
+</p>
+<hr/>
+<p>
+    Please make sure to mark this as read from our app.
+</p>
+</body>
+</html>

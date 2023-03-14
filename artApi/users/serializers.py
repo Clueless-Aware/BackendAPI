@@ -1,13 +1,15 @@
 from allauth.account.adapter import get_adapter
 from artwork.models import Artist
+from artwork.serializers import ArtworkSerializer
 from dj_rest_auth.registration.serializers import RegisterSerializer
 from rest_framework import serializers
 
-from .models import User
+from .models import User, Bookmark
+
+__all__ = ['UserSerializer', 'CustomRegisterSerializer', 'BookmarkSerializer']
 
 
 class UserSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(write_only=True, required=True)
     date_joined = serializers.DateTimeField(read_only=True, required=False)
     last_login = serializers.DateTimeField(read_only=True, required=False)
 
@@ -18,13 +20,13 @@ class UserSerializer(serializers.ModelSerializer):
                                                          queryset=Artist.objects.all(), required=False)
     profile_picture = serializers.ImageField(required=False)
 
-    user_favorites = serializers.HyperlinkedRelatedField(many=True, view_name='accounts:favorite-detail',
-                                                         lookup_field='pk', read_only=True)
+    bookmarked_artworks = ArtworkSerializer(many=True, required=False, read_only=True)
+    user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
 
     class Meta:
         model = User
-        fields = ['id', 'date_joined', 'last_login', 'favorite_artist', 'profile_picture', 'user_favorites',
-                  'is_superuser', 'password',
+        fields = ['id', 'date_joined', 'last_login', 'profile_picture', 'user_bookmarks',
+                  'is_superuser', 'email', 'bookmarked_artworks', 'favorite_artist',
                   'username', 'first_name', 'last_name', 'is_staff', 'is_active', 'biography']
 
     def create(self, validated_data):
@@ -67,9 +69,6 @@ class CustomRegisterSerializer(RegisterSerializer):
     profile_picture = serializers.ImageField(required=False)
     email = serializers.EmailField(required=True)
 
-    def __init__(self):
-        self.cleaned_data = None
-
     def get_cleaned_data(self):
         super(CustomRegisterSerializer, self).get_cleaned_data()
         return {
@@ -111,3 +110,9 @@ class CustomRegisterSerializer(RegisterSerializer):
         request = self.context.get('request')
         profile_pic_url = user.profile_picture.url
         return request.build_absolute_uri(profile_pic_url)
+
+
+class BookmarkSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Bookmark
+        fields = '__all__'
