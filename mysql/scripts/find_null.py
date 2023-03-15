@@ -4,21 +4,31 @@ import pandas as pd
 
 
 def in_file_system(path):
-    return not (exists(f'../../artApi/{path}'))
+    return exists(f'../../artApi/{path}')
 
 
 def load():
     return pd.read_csv('../data/catalog.csv'), pd.read_csv('../data/bio_catalog.csv')
 
 
+def save(df):
+    df.to_csv('./output/null_images.csv', header=True, index=False)
+
+
 def main():
     artwork_df, artist_df = load()
 
-    # artwork_df['image url'].where(lambda x: not exists(f'../../artApi/{x}'))
-    for url in artwork_df['image url']:
-        if in_file_system(url):
-            print('Missing image at: ' + url)
-    # artwork_df['image url'].where(in_file_system)
+    artwork_df['in_file_system'] = artwork_df['image url'].apply(lambda x: in_file_system(x))
+
+    mask = (artwork_df['in_file_system'] == False)
+    missing = artwork_df[mask]
+
+    if len(missing) != 0:
+        print('Missing images in our DB found!')
+        save(missing)
+        print('Saved into a csv...')
+    else:
+        print('DB is complete :)')
 
 
 if __name__ == "__main__":

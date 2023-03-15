@@ -5,6 +5,10 @@ def load():
     return pd.read_csv('../data/catalog.csv'), pd.read_csv('../data/bio_catalog.csv')
 
 
+def save(ndarray, file_name):
+    pd.DataFrame(ndarray).to_csv(f'./output/{file_name}.csv', index=False)
+
+
 def main():
     artwork_df, artist_df = load()
     print('------------------------------------------------------')
@@ -17,9 +21,11 @@ def main():
     print('------------------------------------------------------')
 
     print('\nUnique techniques:')
-    print(artwork_df['TECHNIQUE'].unique())
+    save(artwork_df['TECHNIQUE'].unique(), 'techniques')
+    print('Saved to csv...')
     print('\nUnique locations:')
-    print(artwork_df['LOCATION'].unique())
+    save(artwork_df['LOCATION'].unique(), 'locations')
+    print('Saved to csv...')
     print('\nUnique forms:')
     print(artwork_df['FORM'].unique())
     print('\nUnique types:')
