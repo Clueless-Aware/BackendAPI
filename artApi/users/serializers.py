@@ -1,3 +1,4 @@
+from account.serializers import RequestSerializer
 from allauth.account.adapter import get_adapter
 from artwork.models import Artist
 from artwork.serializers import ArtworkSerializer
@@ -21,11 +22,13 @@ class UserSerializer(serializers.ModelSerializer):
     profile_picture = serializers.ImageField(required=False)
 
     bookmarked_artworks = ArtworkSerializer(many=True, required=False, read_only=True)
+
     user_bookmarks = serializers.PrimaryKeyRelatedField(many=True, read_only=True, required=False)
+    user_email_info = RequestSerializer(many=True, required=False, read_only=True)
 
     class Meta:
         model = User
-        fields = ['id', 'date_joined', 'last_login', 'profile_picture', 'user_bookmarks',
+        fields = ['id', 'date_joined', 'last_login', 'profile_picture', 'user_bookmarks', 'user_email_info',
                   'is_superuser', 'email', 'bookmarked_artworks', 'favorite_artist',
                   'username', 'first_name', 'last_name', 'is_staff', 'is_active', 'biography']
 
