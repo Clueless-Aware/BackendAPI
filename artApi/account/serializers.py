@@ -12,8 +12,10 @@ class RequestSerializer(serializers.ModelSerializer):
     from_user = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
     subject = serializers.CharField(max_length=64)
     content = serializers.CharField(required=False)
+
     critical = serializers.BooleanField(default=False)
     seen = serializers.BooleanField(default=False, read_only=True)
+    completed = serializers.BooleanField(default=False, read_only=True)
 
     email = serializers.EmailField(read_only=True, required=False)
 
@@ -48,8 +50,11 @@ class RequestUpdateSerializer(serializers.ModelSerializer):
     from_user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     subject = serializers.CharField(max_length=64, required=False)
     content = serializers.CharField(required=False)
+
     critical = serializers.BooleanField(default=False, required=False)
     seen = serializers.BooleanField(default=False, required=False)
+    completed = serializers.BooleanField(default=False, required=False)
+
     email = serializers.EmailField(required=False, read_only=True)
 
     class Meta:

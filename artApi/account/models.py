@@ -11,6 +11,7 @@ class Request(models.Model):
     content = models.TextField(null=True)
     critical = models.BooleanField(default=False)
     seen = models.BooleanField(default=False)
+    completed = models.BooleanField(default=False)
     email = models.EmailField()
 
     date = models.DateField(auto_now_add=True)
