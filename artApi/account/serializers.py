@@ -47,15 +47,16 @@ class RequestSerializer(serializers.ModelSerializer):
 
 
 class RequestUpdateSerializer(serializers.ModelSerializer):
+    # Requests info
     from_user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     subject = serializers.CharField(max_length=64, required=False)
     content = serializers.CharField(required=False)
-
-    critical = serializers.BooleanField(default=False, required=False)
-    seen = serializers.BooleanField(default=False, required=False)
-    completed = serializers.BooleanField(default=False, required=False)
-
     email = serializers.EmailField(required=False, read_only=True)
+
+    # Requests status
+    critical = serializers.BooleanField(default=False, required=False)
+    seen = serializers.BooleanField(required=False)
+    completed = serializers.BooleanField(required=False)
 
     class Meta:
         model = Request
