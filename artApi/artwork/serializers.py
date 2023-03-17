@@ -2,7 +2,18 @@ from rest_framework import serializers
 
 from .models import Artwork, Artist
 
-__all__ = ['ArtworkSerializer', 'ArtistSerializer']
+__all__ = ['ArtworkSerializer', 'ArtistSerializer', 'MinifiedArtworkSerializer']
+
+
+class MinifiedArtworkSerializer(serializers.ModelSerializer):
+    def get_image_url(self, artwork):
+        request = self.context.get('request')
+        image_url = artwork.image_url.url
+        return request.build_absolute_uri(image_url)
+
+    class Meta:
+        model = Artwork
+        fields = ['title', 'id', 'author', 'image_url']
 
 
 class ArtworkSerializer(serializers.ModelSerializer):

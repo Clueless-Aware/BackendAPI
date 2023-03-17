@@ -12,8 +12,12 @@ class RequestSerializer(serializers.ModelSerializer):
     from_user = serializers.PrimaryKeyRelatedField(many=False, read_only=False, queryset=User.objects.all())
     subject = serializers.CharField(max_length=64)
     content = serializers.CharField(required=False)
+
     critical = serializers.BooleanField(default=False)
     seen = serializers.BooleanField(default=False, read_only=True)
+    completed = serializers.BooleanField(default=False, read_only=True)
+
+    email = serializers.EmailField(read_only=True, required=False)
 
     class Meta:
         model = Request
@@ -22,6 +26,7 @@ class RequestSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         request = Request.objects.create(**validated_data)
         request.seen = False
+        request.email = request.from_user.email
         header = f'Critical message from{request.from_user.username} please respond ASAP:\n' if request.critical else f'Message from {request.from_user.username}:\n'
         plain_message = f'{header}{request.content}\nOn {request.date}'
         context = {'username': request.from_user.username,
@@ -42,11 +47,16 @@ class RequestSerializer(serializers.ModelSerializer):
 
 
 class RequestUpdateSerializer(serializers.ModelSerializer):
+    # Requests info
     from_user = serializers.PrimaryKeyRelatedField(many=False, read_only=True)
     subject = serializers.CharField(max_length=64, required=False)
     content = serializers.CharField(required=False)
+    email = serializers.EmailField(required=False, read_only=True)
+
+    # Requests status
     critical = serializers.BooleanField(default=False, required=False)
-    seen = serializers.BooleanField(default=False, required=False)
+    seen = serializers.BooleanField(required=False)
+    completed = serializers.BooleanField(required=False)
 
     class Meta:
         model = Request
