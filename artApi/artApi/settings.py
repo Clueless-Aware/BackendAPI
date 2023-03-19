@@ -166,7 +166,7 @@ CORS_ORIGIN_WHITELIST = [
 
 REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
-    'PAGE_SIZE': 25,
+    'PAGE_SIZE': 15,
     'DEFAULT_SCHEMA_CLASS':
         "drf_spectacular.openapi.AutoSchema",
     'DEFAULT_PERMISSION_CLASSES': [
@@ -185,7 +185,7 @@ REST_FRAMEWORK = {
 SPECTACULAR_SETTINGS = {
     "TITLE": "Art api backend",
     "DESCRIPTION": "Our api backend with DRF :)",
-    "VERSION": "0.0.1"
+    "VERSION": "1.0.0"
     # Other settings
 }
 

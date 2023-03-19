@@ -19,6 +19,7 @@ class RequestViewSet(UpdateDefaultSerializerMixin, viewsets.ModelViewSet):
     queryset = Request.objects.all()
     default_serializer_class = RequestSerializer
     update_serializer_class = RequestUpdateSerializer
+    pagination_class = RequestPagination
 
     # Filtering
     filter_backends = (DjangoFilterBackend, OrderingFilter, SearchFilter)
