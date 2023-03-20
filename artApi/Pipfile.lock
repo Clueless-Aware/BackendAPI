@@ -290,11 +290,11 @@
         },
         "drf-spectacular": {
             "hashes": [
-                "sha256:2b31c347c78ed7ed9f021f9e0fcf4e03e86ca6bfc43cb66401236f38f30fd46d",
-                "sha256:3c954a86fbefab93c20f3d39edab1d435f7b16c8291883e40fba5e34265ed461"
+                "sha256:1599a204bf9cc6be7ef3e509859885a38d4f871fe287a1f191479868afd9e234",
+                "sha256:6df86ff6c2dc663792e5ff618643bf41d2ac9dc6fb5d1b0f273e2778bab951e5"
             ],
             "index": "pypi",
-            "version": "==0.26.0"
+            "version": "==0.26.1"
         },
         "idna": {
             "hashes": [
@@ -433,7 +433,7 @@
         },
         "pyjwt": {
             "extras": [
-                "crypto"
+
             ],
             "hashes": [
                 "sha256:69285c7e31fc44f68a1feb309e948e0df53259d579295e6cfe2b1792329f05fd",
