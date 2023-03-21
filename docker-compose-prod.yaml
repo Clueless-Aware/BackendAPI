@@ -3,7 +3,7 @@ services:
   django:
     build:
       context: '${APP_PATH}'
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     depends_on:
       mysql:
         condition: service_started
@@ -63,12 +63,12 @@ services:
   proxy:
     build:
       context: proxy
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile-prod
     environment:
-      - VIRTUAL_HOST=bacchus.switzerlandnorth.cloudapp.azure.com
-      - VIRTUAL_PORT=80
-      - LETSENCRYPT_HOST=bacchus.switzerlandnorth.cloudapp.azure.com
-      - LETSENCRYPT_EMAIL=kevin.sinchi@fitstic-edu.com
+      VIRTUAL_HOST: '${DOMAIN_URL}'
+      VIRTUAL_PORT: '${DOMAIN_PORT}'
+      LETSENCRYPT_HOST: '${DOMAIN_URL}'
+      LETSENCRYPT_EMAIL: '${ENCRYPTION_EMAIL}'
     depends_on:
       - django
     volumes:
