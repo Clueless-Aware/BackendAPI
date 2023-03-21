@@ -2,18 +2,24 @@
 
 This is the django-rest repo that hosts our backend :)
 
+For running this locally you just need docker and any DB manager
+(DBeaver recommended)
+
 ## Environment variables/secrets
 
-For this you will need a working nodejs installation. Someone should have sent you the `.env.pass` file then run
+For this you will need a working nodejs installation. Someone on the should have sent you the `.env.pass` file then run
 
 ```bash
     npm install -g senv 
     ./env-decrypt.sh 
 ```
 
-If you change anything remember to run `./env-encrypt.sh`
+Then go in the decrypted `.env` file and add your local ip and localhost if you want
+to open the backend to your local network
 
-## Installation for local development:
+If you change anything remember to run `./env-encrypt.sh` to modify the file.
+
+### Installation for local development (without containers):
 
 Dependencies (Assuming you are running a linux distro with apt)
 
@@ -25,20 +31,20 @@ Dependencies (Assuming you are running a linux distro with apt)
   pipenv install
 ```
 
-Next you'll need to start the local mysql container
+Next you'll need to start the local mysql and mailhog containers
 
 ```bash
   docker-compose up --build mysql
 ```
 
-Then go in the main folder and start the server
+Then go in the project folder and start the server
 
 ```bash
   cd artApi
   python manage.py runserver
 ```
 
-## For running containers:
+## For running containers locally:
 
 Make sure to have docker installed and to be in the root directory
 
@@ -48,7 +54,7 @@ Make sure to have docker installed and to be in the root directory
 
 Always check with docker-desktop if everything is running correctly.
 
-N.B.: If you are running migrations for the first time you should get an error with migrations history.
+N.B.: If you are running migrations for the first time you could get an error with migrations history.
 To fix this you need to run the following commands in your Mysql bash:
 
 ```sql
@@ -71,17 +77,3 @@ Install dependencies with pipenv. Restart the container, and you should have eve
 * `python manage.py makemigrations`
 * `python manage.py migrate`
 * `python manage.py collectstatic`
-
-## Running il local network
-
-- To run this project on a local network, you will need to add the following environment variables to your .env file.
-- Set private network
-
-`APP_ALLOWED_HOSTS` = Your Local Ip
-
-```bash
-    docker-compose build
-    docker-compose up
-```
-
-- visit host_ip
