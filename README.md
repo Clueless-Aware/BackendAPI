@@ -19,7 +19,7 @@ to open the backend to your local network
 
 If you change anything remember to run `./env-encrypt.sh` to modify the file.
 
-### Installation for local development (without containers):
+## Installation for local development (without containers):
 
 Dependencies (Assuming you are running a linux distro with apt)
 
@@ -65,6 +65,29 @@ UPDATE django_content_type
 SET app_label = 'users'
 WHERE app_label = 'auth'
   and model = 'user';
+```
+
+## Running over HTTPS and a certificate
+
+If you want to do this you will need to start the docker-file in the reverse
+proxy directory `./reverseProxy/docker-compose.yaml`
+
+Before running, it hough you will need to create the required docker network
+with `docker network create nginx-proxy`
+
+```bash
+    cd reverseProxy/
+    docker-compose up
+```
+
+This container will pick up on any other running containers and act as a reverse proxy
+for them. The order doesn't really matter but running the reverseProxy first is recommended.
+
+Now run the docker-compose in the root of the repo:
+
+```bash
+    cd ..
+    docker-compose -f docker-compose-prod.yaml up --build
 ```
 
 ### Adding dependencies
