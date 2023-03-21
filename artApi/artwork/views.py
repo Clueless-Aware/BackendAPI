@@ -22,7 +22,7 @@ class ArtworkViewSet(viewsets.ModelViewSet):
     filterset_fields = ['title', 'author', 'technique',
                         'location', 'timeframe', 'form', 'type', 'author_id', 'id']
     ordering_fields = '__all__'
-    ordering = ['author']
+    ordering = ['title']
 
     # Permissions
     permission_classes = [permissions.IsAdminUser]
