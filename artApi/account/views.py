@@ -33,6 +33,6 @@ class RequestViewSet(UpdateDefaultSerializerMixin, viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_permissions(self):
-        # if self.request.method in ['GET', 'OPTIONS']:
-        #    return [permissions.IsAdminUser()]
+        if self.request.method in ['GET', 'OPTIONS', 'PUT', 'PATCH']:
+            return [permissions.IsAdminUser()]
         return super().get_permissions()
